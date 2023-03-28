@@ -1,6 +1,10 @@
 <template>
   <div class="max-w-screen-xl gap-4 mx-auto grid lg:grid-cols-2">
-    <Banner slug="personalization-pattern"/>
+    <Banner 
+      title="Personalization pattern"
+      copy="An example pattern with personalized web pages. This pattern shows 3 variants of web pages that showcases personalization using the Stack field. Use it to create personalized user experiences in your own web app."
+      url1="https://docs.prepr.io/create-schema/personalization-pattern/"
+    />
     <SegmentSwitch title="Try it out!" @set-segment="changeSegment"/>
   </div>
   

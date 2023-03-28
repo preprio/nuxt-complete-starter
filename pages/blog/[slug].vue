@@ -1,6 +1,10 @@
 <template>
   <div class="container mx-auto md:px-0">
-    <Banner slug="blog-pattern" />
+    <Banner 
+      title="Blog pattern"
+      copy="A typical pattern for blog articles and news sections. It also incorporates a setup to show related authors and categories. This pattern shows a summary of articles and a specific article in detail. In this pattern we also showcase the recommendations feature in Prepr."
+      url1="https://docs.prepr.io/create-schema/blog-pattern/"
+    />
     <main class="pb-16 mt-20 bg-white lg:pb-24 dark:bg-gray-900">
       <div
         class="relative z-20 flex justify-between max-w-screen-xl mx-auto bg-white rounded dark:bg-gray-900"

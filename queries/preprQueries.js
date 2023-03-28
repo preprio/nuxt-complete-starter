@@ -312,13 +312,3 @@ export const GetArticleBySlug = gql`
     }
   }
 `;
-
-export const GetSingleLineBySlug = gql`
-  query ($slug: String) {
-    SingleLine(slug: $slug) {
-      title
-      url1
-      copy
-    }
-  }
-`;
