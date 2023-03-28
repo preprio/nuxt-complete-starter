@@ -1,6 +1,10 @@
 <template>
   <div class="container mx-auto md:px-0">
-    <Banner slug="navigation-pattern" />
+    <Banner 
+      title="Navigation pattern"
+      copy="Navigation is a key structure that is implemented in every web app. This pattern shows parent and child relationships between menu items within a navigation."
+      url1="https://docs.prepr.io/create-schema/navigation-pattern/"
+    />
   </div>
   <div class="container mx-auto md:px-0">
     <header class="mt-24" v-if="navigation">

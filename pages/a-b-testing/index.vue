@@ -1,6 +1,10 @@
 <template>
   <div class="max-w-screen-xl gap-4 mx-auto grid lg:grid-cols-2">
-    <Banner slug="ab-test-pattern"/>
+    <Banner 
+      title="A/B test pattern"
+      copy="The A/B test pattern shows variants of web pages used for A/B testing. This pattern makes use of the A/B Testing feature in Prepr. Use it to implement A/B testing in your web app and optimize your content."
+      url1="https://docs.prepr.io/create-schema/ab-test-pattern/"
+    />
     <ABSwitch title="Try it out!" @set-segment="changeSegment" />
   </div>
   <component
