@@ -3,7 +3,7 @@
     <Banner 
       title="Blog pattern"
       copy="A typical pattern for blog articles and news sections. It also incorporates a setup to show related authors and categories. This pattern shows a summary of articles and a specific article in detail. In this pattern we also showcase the recommendations feature in Prepr."
-      url1="https://docs.prepr.io/create-schema/blog-patteradn/"
+      url1="https://docs.prepr.io/create-schema/blog-pattern/"
     />
     <Hero
       title="Our blog"

@@ -32,9 +32,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     PREPR_ACCESS_TOKEN: process.env.PREPR_ACCESS_TOKEN,
-    public: {
-      PREPR_API_ENDPOINT: process.env.PREPR_API_ENDPOINT,
-    },
+    DEFAULT_ACCESS_TOKEN: process.env.PREPR_ACCESS_TOKEN,
   },
   googleFonts: {
     families: {

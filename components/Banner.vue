@@ -66,4 +66,14 @@ export default {
     url1: String,
   }
 }
+
+const showBanner = useCookie("showBanner", {
+  default: () => false,
+  watch: "shallow",
+});
+const token = useCookie("token");
+
+if (process.server) {
+  showBanner.value = token.value !== process.env.PREPR_ACCESS_TOKEN;
+}
 </script>
