@@ -23,7 +23,6 @@
       </div>
       <div>
         <button
-          @click.prevent="store.popupVisible = true"
           class="px-3 py-2 text-xs font-medium text-gray-800 border border-gray-100 rounded-lg bg-gray-50 hover:bg-gray-200"
         >
           Follow
@@ -34,7 +33,6 @@
 </template>
 
 <script setup>
-import { store } from "@/store/store.js";
 const props = defineProps(["data"]);
 const authors = computed(() => props.data);
 </script>

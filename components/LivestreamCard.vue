@@ -17,7 +17,7 @@
           <div class="flex -space-x-2">
             <img v-for="speaker in event.speakers" :key="speaker.full_name" class="w-6 h-6 border-2 border-white rounded-full dark:border-gray-800" :src="speaker.profile_pic[0].url" :alt="`${speaker.full_name} profile image`" />
           </div>
-          <a href="#notify" class="inline-flex items-center text-sm font-semibold leading-tight md:text-base text-violet-600 hover:underline dark:text-violet-500">
+          <a href="#" class="inline-flex items-center text-sm font-semibold leading-tight md:text-base text-violet-600 hover:underline dark:text-violet-500">
             {{ linkText }}
             <svg class="w-4 h-4 ml-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path

@@ -20,8 +20,7 @@
       </p>
       <a
         v-if="data.cta_label"
-        href="#"
-        @click.prevent="store.popupVisible = true"
+        href="#notify"
         class="
           inline-flex
           items-center
@@ -110,7 +109,6 @@
 
 <script setup>
 import { computed } from "vue";
-import { store } from "@/store/store.js";
 const props = defineProps(["data"]);
 const data = computed(() => props.data);
 const hasImage = computed(() => "image" in props.data);

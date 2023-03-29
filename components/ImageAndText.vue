@@ -2,7 +2,7 @@
   <div class="container mx-auto md:px-0">
     <section class="bg-white dark:bg-gray-900">
       <div
-        class="items-center max-w-screen-xl gap-8 px-4 py-8 mx-auto  xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6"
+        class="items-center max-w-screen-xl gap-8 px-4 py-8 mx-auto xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6"
       >
         <img
           :class="data.image_position === 'Right' ? 'order-last' : ''"
