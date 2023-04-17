@@ -2,11 +2,11 @@
   <div class="container mx-auto md:px-0">
     <div
       :style="`background-image: url(${data.background_image[0].url});`"
-      class="w-full px-8 py-12 mt-4 bg-white bg-no-repeat bg-cover border border-gray-200  md:px-24 md:py-16 md:mt-14 rounded-2xl dark:bg-gray-800 dark:border-gray-700"
+      class="w-full px-8 py-12 mt-4 bg-white bg-no-repeat bg-cover border border-gray-200 md:px-24 md:py-16 md:mt-14 rounded-2xl dark:bg-gray-800 dark:border-gray-700"
     >
       <a href="#">
         <h5
-          class="mb-2 text-2xl font-bold tracking-tight text-gray-900  dark:text-white"
+          class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
         >
           {{ data.heading }}
         </h5>
@@ -16,7 +16,8 @@
       </p>
       <a
         href="#"
-        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg  bg-violet-700 hover:bg-violet-800 focus:ring-4 focus:outline-none focus:ring-violet-300 dark:bg-violet-600 dark:hover:bg-violet-700 dark:focus:ring-violet-800"
+         @click.prevent="store.popupVisible = true"
+        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-violet-700 hover:bg-violet-800 focus:ring-4 focus:outline-none focus:ring-violet-300 dark:bg-violet-600 dark:hover:bg-violet-700 dark:focus:ring-violet-800"
       >
         {{ data.cta_label }}
         <svg
@@ -39,6 +40,7 @@
 
 <script setup>
 import { computed } from "vue";
+import { store } from "@/store/store.js";
 const props = defineProps(["data"]);
 const data = computed(() => props.data);
 </script>

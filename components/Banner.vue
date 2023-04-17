@@ -58,22 +58,7 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    title: String,
-    copy: String,
-    url1: String,
-  }
-}
+<script setup>
+const props = defineProps(["title", "copy", "url1"]);
 
-const showBanner = useCookie("showBanner", {
-  default: () => false,
-  watch: "shallow",
-});
-const token = useCookie("token");
-
-if (process.server) {
-  showBanner.value = token.value !== process.env.PREPR_ACCESS_TOKEN;
-}
 </script>

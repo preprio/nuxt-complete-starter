@@ -11,7 +11,6 @@ export default defineNuxtPlugin((nuxtApp) => {
   const { $apollo } = useNuxtApp();
   const route = useRoute();
   const cookieToken = useCookie("token");
-  const showBanner = useCookie("showBanner");
   let token;
 
   if (cookieToken.value) {
@@ -19,10 +18,11 @@ export default defineNuxtPlugin((nuxtApp) => {
   } else {
     token = route.query.token
       ? route.query.token
-      : runtimeConfig.PREPR_ACCESS_TOKEN;
+      : runtimeConfig.public.PREPR_ACCESS_TOKEN;
   }
 
   cookieToken.value = token;
+
 
   // Create an authLink and set authentication token if necessary
   const authLink = setContext(async (_, { headers }) => {
@@ -35,22 +35,25 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   const httpLink = authLink.concat(
     createHttpLink({
-      uri: 'https://graphql.prepr.io/graphql',
+      uri: "https://graphql.prepr.io/graphql",
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
   );
 
-  
   const errorLink = onError((err) => {
-    nuxtApp.callHook("apollo:error", err);
+    nuxtApp.hook("apollo:error", (error) => {
+
+      // console.error('aa', error)
+      // Handle different error cases
+    });
   });
 
   // Set custom links in the apollo client (in this case, the default apollo client)
   $apollo.defaultClient.setLink(from([errorLink, httpLink]));
 
   nuxtApp.hook("apollo:error", (error) => {
-    console.error(error);
+
   });
 });

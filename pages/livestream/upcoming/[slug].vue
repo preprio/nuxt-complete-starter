@@ -110,9 +110,13 @@ import CountDown from "@/components/CountDown.vue";
 
 const route = useRoute();
 
-const { data } = await useAsyncQuery(GetStreamBySlug, {
+const { data, error } = await useAsyncQuery(GetStreamBySlug, {
   slug: route.params.slug,
 });
+
+if (!data.value) {
+  throw createError({ statusCode: 404, statusMessage: error.value });
+}
 
 const { LiveEvent } = data.value;
 </script>

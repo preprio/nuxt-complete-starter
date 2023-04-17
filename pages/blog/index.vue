@@ -52,6 +52,11 @@ const state = reactive({
 });
 
 const { data, error, refresh } = await useAsyncQuery(GetArticles);
+
+if (!data.value) {
+  throw createError({ statusCode: 404, statusMessage: error.value });
+}
+
 state.articles = data.value.Articles.items;
 state.articlesFiltered = data.value.Articles.items;
 

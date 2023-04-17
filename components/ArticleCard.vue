@@ -22,7 +22,7 @@
       <div class="flex justify-between mb-4">
         <Badge
           :label="data.categories[0].title"
-          :iconUrl="data.categories[0].icon[0].url"
+          :iconUrl="data.categories[0].icon ? data.categories[0].icon[0].url : ''"
           classes="bg-violet-100 text-violet-800"
         />
         <span class="text-sm text-gray-400">{{ getPublishDate(data) }}</span>

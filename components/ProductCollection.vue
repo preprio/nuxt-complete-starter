@@ -15,7 +15,7 @@
           <p
             class="mt-6 text-sm font-medium text-center md:text-lg text-violet-600"
           >
-            <a href="#"
+            <a href="#" @click.prevent="store.popupVisible = true"
               >{{ data.cta_label }}
               <svg
                 class="inline ml-2"
@@ -69,21 +69,8 @@
                 >
                 <a
                   href="#"
-                  class="
-                    text-white
-                    bg-violet-700
-                    hover:bg-violet-800
-                    focus:ring-4 focus:outline-none focus:ring-violet-300
-                    font-medium
-                    rounded-lg
-                    text-sm
-                    px-5
-                    py-2.5
-                    text-center
-                    dark:bg-violet-600
-                    dark:hover:bg-violet-700
-                    dark:focus:ring-violet-800
-                  "
+                  @click.prevent="store.popupVisible = true"
+                  class="text-white bg-violet-700 hover:bg-violet-800 focus:ring-4 focus:outline-none focus:ring-violet-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-violet-600 dark:hover:bg-violet-700 dark:focus:ring-violet-800"
                   >Add to cart</a
                 >
               </div>
@@ -98,17 +85,7 @@
                 v-for="(product, index) in data.products"
                 :key="product._id"
                 :data-carousel-item="index == 0"
-                class="
-                  absolute
-                  w-full
-           
-                  duration-700
-                  bg-white
-                  border border-gray-200
-                  rounded-lg
-                  h-[278px]
-                  dark:bg-gray-800 dark:border-gray-700
-                "
+                class="absolute w-full duration-700 bg-white border border-gray-200 rounded-lg h-[278px] dark:bg-gray-800 dark:border-gray-700"
               >
                 <a href="#" class="">
                   <img
@@ -133,21 +110,7 @@
                     >
                     <a
                       href="#"
-                      class="
-                        text-white
-                        bg-violet-700
-                        hover:bg-violet-800
-                        focus:ring-4 focus:outline-none focus:ring-violet-300
-                        font-medium
-                        rounded-lg
-                        text-sm
-                        px-5
-                        py-2.5
-                        text-center
-                        dark:bg-violet-600
-                        dark:hover:bg-violet-700
-                        dark:focus:ring-violet-800
-                      "
+                      class="text-white bg-violet-700 hover:bg-violet-800 focus:ring-4 focus:outline-none focus:ring-violet-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-violet-600 dark:hover:bg-violet-700 dark:focus:ring-violet-800"
                       >Add to cart</a
                     >
                   </div>
@@ -164,6 +127,7 @@
 <script setup>
 import { computed } from "vue";
 import { useDateFormatter } from "@/composables/useDateFormatter";
+import { store } from "@/store/store.js";
 import Carousel from "@/components/Carousel.vue";
 const props = defineProps(["data"]);
 

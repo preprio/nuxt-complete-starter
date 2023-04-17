@@ -137,8 +137,13 @@ import { GetNavigation } from "@/queries/preprQueries";
 import { useFlowbite } from "@/helpers/flowbite";
 const flowbite = useFlowbite();
 
-const navigationQuery = await useAsyncQuery(GetNavigation);
-const navigation = navigationQuery.data.value.Navigation;
+const { data, error } = await useAsyncQuery(GetNavigation);
+
+if (!data.value.Navigation) {
+  throw createError({ statusCode: 404, statusMessage: error.value });
+}
+
+const navigation = data.value.Navigation;
 
 const hasChildren = (navItem) => {
   return navItem.children.length > 0;

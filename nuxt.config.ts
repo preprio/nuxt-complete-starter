@@ -31,8 +31,9 @@ export default defineNuxtConfig({
     },
   },
   runtimeConfig: {
-    PREPR_ACCESS_TOKEN: process.env.PREPR_ACCESS_TOKEN,
-    DEFAULT_ACCESS_TOKEN: process.env.PREPR_ACCESS_TOKEN,
+    public: {
+      PREPR_ACCESS_TOKEN: process.env.PREPR_ACCESS_TOKEN,
+    },
   },
   googleFonts: {
     families: {

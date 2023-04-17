@@ -241,7 +241,7 @@ export const GetCategories = gql`
 
 export const GetNavigation = gql`
   {
-    Navigation(id: "6384ae35-4fe6-4208-b947-b8a509bd3d4b") {
+    Navigation(slug: "top-navigation") {
       _id
       title
       menu_items {

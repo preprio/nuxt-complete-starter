@@ -89,9 +89,14 @@ import ArticleAuthor from "@/components/ArticleAuthor.vue";
 import { GetArticleBySlug } from "@/queries/preprQueries";
 
 const route = useRoute();
-const articleQuery = await useAsyncQuery(GetArticleBySlug, {
+const { data, error } = await useAsyncQuery(GetArticleBySlug, {
   slug: route.params.slug,
 });
-const article = articleQuery.data.value.Article;
+
+if (!data.value) {
+  throw createError({ statusCode: 404, statusMessage: error.value });
+}
+
+const article = data.value.Article;
 
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-screen-xl gap-4 mx-auto grid lg:grid-cols-2">
+  <div class="grid max-w-screen-xl gap-4 mx-auto lg:grid-cols-2">
     <Banner 
       title="A/B test pattern"
       copy="The A/B test pattern shows variants of web pages used for A/B testing. This pattern makes use of the A/B Testing feature in Prepr. Use it to implement A/B testing in your web app and optimize your content."
@@ -65,6 +65,10 @@ const { data, error } = await useAsyncQuery({
   },
   clientId: `${clientId.value}segment`,
 });
+
+if (!data.value) {
+  throw createError({ statusCode: 404, statusMessage: error.value });
+}
 
 state.stack = data.value.Page.stack;
 

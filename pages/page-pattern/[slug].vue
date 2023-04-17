@@ -53,10 +53,9 @@ const { data, error } = await useAsyncQuery(
   }
 );
 
-if (error.value) {
-  state.errors = true;
-  state.errorMessage = JSON.stringify(error, null, 2);
-} //Todo: handle error with ErrorMessage component
+if (!data.value) {
+  throw createError({ statusCode: 404, statusMessage: error.value });
+}
 
 const page = data.value.Page;
 const stack = computed(() => {

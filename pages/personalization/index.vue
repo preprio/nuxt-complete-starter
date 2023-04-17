@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-screen-xl gap-4 mx-auto grid lg:grid-cols-2">
+  <div class="grid max-w-screen-xl gap-4 mx-auto lg:grid-cols-2">
     <Banner 
       title="Personalization pattern"
       copy="An example pattern with personalized web pages. This pattern shows 3 variants of web pages that showcases personalization using the Stack field. Use it to create personalized user experiences in your own web app."
@@ -66,6 +66,10 @@ const { data, error, refresh } = await useAsyncQuery({
   },
   clientId: clientId.value,
 });
+
+if (!data.value) {
+  throw createError({ statusCode: 404, statusMessage: error.value });
+}
 
 state.stack = data.value.Page.stack;
 
