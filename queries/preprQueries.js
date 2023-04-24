@@ -337,6 +337,28 @@ export const GetCategories = gql`
   }
 `;
 
+export const GetNavigation = gql`
+  {
+    Navigation(slug: "top-navigation") {
+      _id
+      title
+      menu_items {
+        __typename
+        title
+        _slug
+        _id
+        children {
+          _id
+          title
+          icon {
+            url
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const GetArticleBySlug = gql`
   query ($slug: String) {
     Article(slug: $slug) {
@@ -385,40 +407,6 @@ export const GetArticleBySlug = gql`
           url
         }
       }
-    }
-  }
-`;
-
-// Navigation
-export const GetNavigation = gql`
-  {
-    Navigation(id: "6384ae35-4fe6-4208-b947-b8a509bd3d4b") {
-      _id
-      title
-      menu_items {
-        __typename
-        title
-        _slug
-        _id
-        children {
-          _id
-          title
-          icon {
-            url
-          }
-        }
-      }
-    }
-  }
-`;
-
-// Banners
-export const GetSingleLineBySlug = gql`
-  query ($slug: String) {
-    SingleLine(slug: $slug) {
-      title
-      url1
-      copy
     }
   }
 `;

@@ -1,4 +1,5 @@
 <template>
+  <CloneBanner />
   <nav
     class="absolute top-0 left-0 right-0 bg-white border-gray-200 md:relative dark:border-gray-600 dark:bg-gray-900"
   >
@@ -115,6 +116,7 @@ import { watch, computed, reactive } from "vue";
 import { useRoute } from "vue-router";
 
 import Logo from "@/components/Logo.vue";
+import CloneBanner from "@/components/CloneBanner.vue";
 
 const route = useRoute();
 const state = reactive({ expanded: false });

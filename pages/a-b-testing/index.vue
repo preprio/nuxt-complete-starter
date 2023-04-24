@@ -1,6 +1,10 @@
 <template>
-  <div class="max-w-screen-xl gap-4 mx-auto grid lg:grid-cols-2">
-    <Banner slug="ab-test-pattern"/>
+  <div class="grid max-w-screen-xl gap-4 mx-auto lg:grid-cols-2">
+    <Banner 
+      title="A/B test pattern"
+      copy="The A/B test pattern shows variants of web pages used for A/B testing. This pattern makes use of the A/B Testing feature in Prepr. Use it to implement A/B testing in your web app and optimize your content."
+      url1="https://docs.prepr.io/create-schema/ab-test-pattern/"
+    />
     <ABSwitch title="Try it out!" @set-segment="changeSegment" />
   </div>
   <component
@@ -57,12 +61,17 @@ const getComponent = (name) => {
 
 // Query static slug for demo on Patterns site 
 const { data, error, refresh } = await useAsyncQuery({
-    query: GetStaticPageBySlug,
-    variables: {
-      slug: "home-page-ab-testing",
-    },
-    clientId: `${clientId.value}segment`,
-  });
+  query: GetStaticPageBySlug,
+  variables: {
+    slug: "home-page-ab-testing",
+  },
+  clientId: `${clientId.value}segment`,
+});
+  
+if (!data.value) {
+  throw createError({ statusCode: 404, statusMessage: error.value });
+}
+
 state.stack = data.value.Page.stack;
 
 const changeSegment = async (segment) => {

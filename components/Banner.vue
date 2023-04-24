@@ -1,15 +1,15 @@
 <template>
   <div class="max-w-screen-xl mx-4 lg:mx-0">
-    <div class="rounded-xl bg-violet-50" v-if="banner">
+    <div class="rounded-xl bg-violet-50">
       <div class="px-8 py-7">
         <h2
           class="inline text-2xl font-bold tracking-tight text-gray-900 sm:block"
         >
-          {{ banner.title }}
+          {{ title }}
         </h2>
-        <div class="my-4 article" v-html="banner.copy"></div>
+        <div class="my-4 article" v-html="copy"></div>
         <a
-          :href="banner.url1"
+          :href="url1"
           target="_blank"
           class="
             text-white
@@ -59,12 +59,6 @@
 </template>
 
 <script setup>
-import { GetSingleLineBySlug } from "@/queries/preprQueries";
-import { store } from "@/store/store.js";
-const props = defineProps({ slug: String });
+const props = defineProps(["title", "copy", "url1"]);
 
-const bannerQuery = await useAsyncQuery(GetSingleLineBySlug, {
-  slug: props.slug,
-});
-const banner = bannerQuery.data.value?.SingleLine;
 </script>
