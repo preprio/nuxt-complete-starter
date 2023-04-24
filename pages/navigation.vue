@@ -1,10 +1,6 @@
 <template>
   <div class="container mx-auto md:px-0">
-    <Banner 
-      title="Navigation pattern"
-      copy="Navigation is a key structure that is implemented in every web app. This pattern shows parent and child relationships between menu items within a navigation."
-      url1="https://docs.prepr.io/create-schema/navigation-pattern/"
-    />
+    <Banner slug="navigation-pattern" />
   </div>
   <div class="container mx-auto md:px-0">
     <header class="mt-24" v-if="navigation">
@@ -137,13 +133,8 @@ import { GetNavigation } from "@/queries/preprQueries";
 import { useFlowbite } from "@/helpers/flowbite";
 const flowbite = useFlowbite();
 
-const { data, error } = await useAsyncQuery(GetNavigation);
-
-if (!data.value.Navigation) {
-  throw createError({ statusCode: 404, statusMessage: error.value });
-}
-
-const navigation = data.value.Navigation;
+const navigationQuery = await useAsyncQuery(GetNavigation);
+const navigation = navigationQuery.data.value.Navigation;
 
 const hasChildren = (navItem) => {
   return navItem.children.length > 0;

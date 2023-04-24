@@ -1,10 +1,6 @@
 <template>
   <div class="container mx-auto md:px-0">
-    <Banner 
-      title="Blog pattern"
-      copy="A typical pattern for blog articles and news sections. It also incorporates a setup to show related authors and categories. This pattern shows a summary of articles and a specific article in detail. In this pattern we also showcase the recommendations feature in Prepr."
-      url1="https://docs.prepr.io/create-schema/blog-pattern/"
-    />
+    <Banner slug="blog-pattern" />
     <Hero
       title="Our blog"
       description="Fun recipes, tips-and-tricks and more from our in-house chefs."
@@ -52,11 +48,6 @@ const state = reactive({
 });
 
 const { data, error, refresh } = await useAsyncQuery(GetArticles);
-
-if (!data.value) {
-  throw createError({ statusCode: 404, statusMessage: error.value });
-}
-
 state.articles = data.value.Articles.items;
 state.articlesFiltered = data.value.Articles.items;
 

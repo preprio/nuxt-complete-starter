@@ -1,3 +1,4 @@
+// Live stream
 export const GetUpcomingLiveStreams = gql`
   query ($where: LiveEventWhereInput) {
     LiveEvents(where: $where) {
@@ -91,8 +92,104 @@ export const GetStreamBySlug = gql`
   }
 `;
 
-//With Stack
+// Page
 export const GetPageBySlug = gql`
+  query ($slug: String, $segment: String!) {
+    Page(slug: $slug) {
+      _id
+      title
+      _slug
+      type
+      stack (personalize_for_segments: [$segment]){
+        __typename
+        ... on PageHeader {
+          heading
+          cta_url
+          cta_label
+          image {
+            url(width: 1600)
+          }
+          _id
+          text
+        }
+        ... on ArticleCollection {
+          _id
+          articles {
+            _id
+            title
+            _slug
+            authors {
+              full_name
+              profile_pic {
+                url
+                original_name
+              }
+              _read_time
+              _created_on
+              _publish_on
+            }
+            _publish_on
+            seo {
+              social_media_image {
+                url
+              }
+            }
+            content {
+              ... on Text {
+                body
+              }
+            }
+          }
+          heading
+          cta_label
+          cta_url
+          description
+        }
+        ... on ImageAndText {
+          image {
+            url(width: 800)
+          }
+          text
+          title
+          image_position
+          _id
+        }
+        ... on ProductCollection {
+          heading
+          description
+          cta_url
+          cta_label
+          products {
+            price
+            title
+            image
+            description
+          }
+        }
+        ... on CallToAction {
+          background_image {
+            url(width: 1600)
+          }
+          cta_label
+          description
+          heading
+        }
+      }
+      seo {
+        _id
+        title
+        description
+        social_media_image {
+          _id
+          url
+        }
+      }
+    }
+  }
+`;
+
+// A/B test + Personalization
+export const GetStaticPageBySlug = gql`
   query ($slug: String) {
     Page(slug: $slug) {
       _id
@@ -187,6 +284,7 @@ export const GetPageBySlug = gql`
   }
 `;
 
+// Blog
 export const GetArticles = gql`
   query ($where: ArticleWhereInput) {
     Articles(where: $where) {
@@ -234,28 +332,6 @@ export const GetCategories = gql`
           url
         }
         title
-      }
-    }
-  }
-`;
-
-export const GetNavigation = gql`
-  {
-    Navigation(slug: "top-navigation") {
-      _id
-      title
-      menu_items {
-        __typename
-        title
-        _slug
-        _id
-        children {
-          _id
-          title
-          icon {
-            url
-          }
-        }
       }
     }
   }
@@ -309,6 +385,40 @@ export const GetArticleBySlug = gql`
           url
         }
       }
+    }
+  }
+`;
+
+// Navigation
+export const GetNavigation = gql`
+  {
+    Navigation(id: "6384ae35-4fe6-4208-b947-b8a509bd3d4b") {
+      _id
+      title
+      menu_items {
+        __typename
+        title
+        _slug
+        _id
+        children {
+          _id
+          title
+          icon {
+            url
+          }
+        }
+      }
+    }
+  }
+`;
+
+// Banners
+export const GetSingleLineBySlug = gql`
+  query ($slug: String) {
+    SingleLine(slug: $slug) {
+      title
+      url1
+      copy
     }
   }
 `;

@@ -1,10 +1,6 @@
 <template>
   <div class="container mx-auto md:px-0">
-    <Banner 
-      title="Page pattern"
-      copy="The generic page pattern can be used for different kinds of pages such as a landing page or a homepage. This pattern makes use of the Prepr Stack field to compose the elements on a page easily."
-      url1="https://docs.prepr.io/create-schema/page-pattern/"
-    />
+    <Banner slug="page-pattern" />
   </div>
   <component
     v-for="element in stack"
@@ -46,16 +42,19 @@ const getComponent = (name) => {
 
 const state = reactive({ errors: false, errorMessage: null });
 
-const { data, error } = await useAsyncQuery(
-  GetPageBySlug,
-  {
-    slug: route.params.slug,
-  }
-);
+const segment = route.query.utm_campaign;
+const { data, error, refresh } = await useAsyncQuery({
+    query: GetPageBySlug,
+    variables: {
+      slug: route.params.slug,
+      segment: segment || '',
+    },
+  });
 
-if (!data.value) {
-  throw createError({ statusCode: 404, statusMessage: error.value });
-}
+if (error.value) {
+  state.errors = true;
+  state.errorMessage = JSON.stringify(error, null, 2);
+} //Todo: handle error with ErrorMessage component
 
 const page = data.value.Page;
 const stack = computed(() => {

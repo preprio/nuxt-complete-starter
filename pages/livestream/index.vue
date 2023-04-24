@@ -1,10 +1,6 @@
 <template>
   <div class="container mx-auto md:px-0">
-    <Banner 
-      title="Live stream pattern"
-      copy="A common UX pattern for live stream events that leverages the live stream features in Prepr. This pattern shows not only live events, but also upcoming and recorded live streams. Learn more about <a href='https://docs.prepr.io/managing-content/live-video-stream'>live streaming in Prepr</a> on our Documentation site."
-      url1="https://docs.prepr.io/create-schema/live-stream-pattern/"
-    />
+    <Banner slug="live-stream-pattern" />
     <Hero
       title="Live Events"
       description="Through our live events, join our baking community and skill up on basic and advanced skills. Turn your baked goodies into unforgettable treats for your family, friends or customers."
@@ -66,7 +62,6 @@ const recordedQuery = await useAsyncQuery(GetRecordedLiveStreams, {
     start_day_and_time_lt: today,
   },
 });
-
 
 const live = liveQuery.data.value.LiveEvent;
 const upcoming = upcomingQuery.data.value.LiveEvents.items;

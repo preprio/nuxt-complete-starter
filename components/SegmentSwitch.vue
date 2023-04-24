@@ -47,7 +47,7 @@
               <li>
                 <a
                   href="."
-                  @click.prevent="emitSegment('beginnerBaker')"
+                  @click.prevent="emitSegment('beginner-bakers')"
                   class="block p-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 >
                   <svg
@@ -70,7 +70,7 @@
               <li>
                 <a
                   href="."
-                  @click.prevent="emitSegment('proBaker')"
+                  @click.prevent="emitSegment('pro-bakers')"
                   class="block p-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                   ><svg
                     width="14"
@@ -99,7 +99,7 @@
               <li>
                 <a
                   href="."
-                  @click.prevent="emitSegment('prepr')"
+                  @click.prevent="emitSegment('')"
                   class="block p-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                   ><svg
                     class="inline mr-2"

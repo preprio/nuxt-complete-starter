@@ -1,10 +1,6 @@
 <template>
   <div class="grid max-w-screen-xl gap-4 mx-auto lg:grid-cols-2">
-    <Banner 
-      title="Personalization pattern"
-      copy="An example pattern with personalized web pages. This pattern shows 3 variants of web pages that showcases personalization using the Stack field. Use it to create personalized user experiences in your own web app."
-      url1="https://docs.prepr.io/create-schema/personalization-pattern/"
-    />
+    <Banner slug="personalization-pattern"/>
     <SegmentSwitch title="Try it out!" @set-segment="changeSegment"/>
   </div>
   
@@ -27,7 +23,7 @@ import ImageAndText from "@/components/ImageAndText";
 import ArticleCollection from "@/components/ArticleCollection";
 import ProductCollection from "@/components/ProductCollection";
 import CallToAction from "@/components/CallToAction";
-import { GetPageBySlug } from "@/queries/preprQueries";
+import {GetPageBySlug} from "@/queries/preprQueries";
 
 const contentItemID = ref("");
 const clientId = ref("prepr");
@@ -63,8 +59,9 @@ const { data, error, refresh } = await useAsyncQuery({
   query: GetPageBySlug,
   variables: {
     slug: "home-page-personalization",
+    segment: ""
   },
-  clientId: clientId.value,
+  clientId: clientId,
 });
 
 if (!data.value) {
@@ -74,13 +71,13 @@ if (!data.value) {
 state.stack = data.value.Page.stack;
 
 const changeSegment = async (segment) => {
-  clientId.value = segment;
   const { data, error, refresh } = await useAsyncQuery({
     query: GetPageBySlug,
     variables: {
       slug: "home-page-personalization",
+      segment
     },
-    clientId: clientId.value,
+    clientId: clientId,
   });
 
   state.stack = data.value.Page.stack;
@@ -89,5 +86,4 @@ const changeSegment = async (segment) => {
 
 
 </script>
-
 
