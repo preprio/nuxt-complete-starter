@@ -6,22 +6,19 @@ export const GetUpcomingLiveStreams = gql`
         _id
         _slug
         title
+        cover {
+          url(width: 1920)
+        }
         start_day_and_time
         speakers {
           full_name
           profile_pic {
-            url(width: 1920)
+            url(width: 384, height: 448)
           }
         }
         heading
         live_stream {
-          cover(width: 1920)
-        }
-        seo {
-          social_media_image {
-            url(width: 1920)
-            name
-          }
+          cover(width: 384, height: 448)
         }
       }
     }
@@ -35,6 +32,9 @@ export const GetRecordedLiveStreams = gql`
         _id
         _slug
         title
+        cover {
+          url(width: 1920)
+        }
         start_day_and_time
         speakers {
           _id
@@ -45,13 +45,7 @@ export const GetRecordedLiveStreams = gql`
         }
         heading
         live_stream {
-          cover(width: 1920)
-        }
-        seo {
-          social_media_image {
-            url(width: 1920)
-            name
-          }
+          cover(width: 384, height: 448)
         }
       }
     }
@@ -64,6 +58,9 @@ export const GetStreamBySlug = gql`
       _id
       title
       _slug
+      cover {
+        url(width: 1920)
+      }
       speakers {
         __typename
         bio
@@ -79,15 +76,6 @@ export const GetStreamBySlug = gql`
         playback_id
       }
       start_day_and_time
-      seo {
-        _id
-        title
-        description
-        social_media_image {
-          _id
-          url(width: 1920)
-        }
-      }
     }
   }
 `;
@@ -117,6 +105,10 @@ export const GetPageBySlug = gql`
           articles {
             _id
             title
+            excerpt
+            cover {
+                url(width: 384, height: 448)
+            }
             _slug
             authors {
               full_name
@@ -129,11 +121,6 @@ export const GetPageBySlug = gql`
               _publish_on
             }
             _publish_on
-            seo {
-              social_media_image {
-                url
-              }
-            }
             content {
               ... on Text {
                 body
@@ -175,15 +162,6 @@ export const GetPageBySlug = gql`
           heading
         }
       }
-      seo {
-        _id
-        title
-        description
-        social_media_image {
-          _id
-          url
-        }
-      }
     }
   }
 `;
@@ -214,6 +192,9 @@ export const GetStaticPageBySlug = gql`
             _id
             title
             _slug
+            cover {
+                url(width: 384, height: 448)
+            }
             authors {
               full_name
               profile_pic {
@@ -225,11 +206,6 @@ export const GetStaticPageBySlug = gql`
               _publish_on
             }
             _publish_on
-            seo {
-              social_media_image {
-                url
-              }
-            }
             content {
               ... on Text {
                 body
@@ -291,6 +267,10 @@ export const GetArticles = gql`
       items {
         _id
         title
+        excerpt
+        cover {
+            url(width: 384, height: 448)
+        }
         _slug
         authors {
           full_name
@@ -311,11 +291,6 @@ export const GetArticles = gql`
           }
           title
           _slug
-        }
-        seo {
-          social_media_image {
-            url(width: 192, height: 224)
-          }
         }
       }
     }
@@ -363,8 +338,8 @@ export const GetArticleBySlug = gql`
   query ($slug: String) {
     Article(slug: $slug) {
       _id
-      title
       _slug
+      title
       categories {
         icon {
           url
@@ -393,18 +368,9 @@ export const GetArticleBySlug = gql`
         }
         ... on Assets {
           items {
-            url(width: 928, height: 480)
+            url(width: 1856, height: 960)
             caption
           }
-        }
-      }
-      seo {
-        _id
-        title
-        description
-        social_media_image {
-          _id
-          url
         }
       }
     }

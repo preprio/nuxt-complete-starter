@@ -50,7 +50,7 @@ export default {
   },
   computed: {
     image() {
-      return this.event.seo?.social_media_image[0].url
+      return this.event.cover[0].url
     },
     streamDate() {
       const options = { year: 'numeric', month: 'short', day: 'numeric' }

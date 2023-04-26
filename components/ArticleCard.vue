@@ -4,7 +4,7 @@
     class="flex flex-col items-center mb-6 transition-shadow bg-white border rounded-lg shadow-md hover:shadow-lg md:flex-row dark:border-gray-700 dark:bg-gray-800"
   >
     <img
-      v-if="data.seo"
+      v-if="data.cover"
       class="
         object-cover
         w-full
@@ -13,7 +13,7 @@
         md:h-auto
         md:w-48 md:rounded-none md:rounded-l-lg
       "
-      :src="data.seo.social_media_image[0].url"
+      :src="data.cover[0].url"
       alt=""
     />
     <div
@@ -34,7 +34,7 @@
       </h5>
       <div
         class="mb-4 text-base font-normal text-gray-500 line-clamp-2"
-        v-html="getExcerpt(data)"
+        v-html="data.excerpt"
       ></div>
       <div class="flex flex-row items-center justify-between">
         <div
@@ -80,14 +80,6 @@ import { computed } from "vue";
 import { useDateFormatter } from "@/composables/useDateFormatter";
 const props = defineProps(["data"]);
 const data = computed(() => props.data);
-
-const getExcerpt = (article) => {
-  return article.content[0].body;
-};
-
-const hasImage = computed(() => {
-  return "seo" in props.data;
-});
 
 const getPublishDate = (article) => {
   const options = { year: "numeric", month: "short", day: "numeric" };

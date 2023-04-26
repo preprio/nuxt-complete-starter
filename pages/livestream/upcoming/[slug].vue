@@ -88,7 +88,7 @@
       <div class="hidden md:flex basis-2/4">
         <img
           class="object-cover w-full rounded-lg h-96"
-          :src="LiveEvent.seo.social_media_image[0].url"
+          :src="LiveEvent.cover[0].url"
           alt="Live Stream"
         />
       </div>
