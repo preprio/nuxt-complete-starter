@@ -24,8 +24,6 @@ export default defineNuxtConfig({
   apollo: {
     clients: {
       default: "./apollo/prepr.ts",
-      proBaker: "./apollo/proBaker.ts",
-      beginnerBaker: "./apollo/beginnerBaker.ts",
       asegment: "./apollo/asegment.ts",
       bsegment: "./apollo/bsegment.ts",
     },

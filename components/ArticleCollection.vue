@@ -45,8 +45,7 @@
             <nuxt-link :to="`/blog/${article._slug}`">
               <img
                 class="object-cover w-full h-48 mb-5 rounded-lg"
-                :src="article.seo.social_media_image[0].url"
-                alt="office laptop working"
+                :src="article.cover[0].url"
               />
               <span
                 class="
@@ -68,7 +67,7 @@
               </h2>
               <p
                 class="mb-4 font-light text-gray-500  dark:text-gray-400 line-clamp-4"
-                v-html="getExcerpt(article)"
+                v-html="article.excerpt"
               ></p>
               <div class="flex items-center space-x-4">
                 <img
@@ -94,7 +93,7 @@
           </article>
         </div>
 
-        <div class="grid gap-8 md:hidden sm:grid-cols-2 lg:grid-cols-3">
+        <div class="md:hidden">
           <Carousel :items="data.articles">
             <div class="rounded-lg h-[364px]">
               <div
@@ -109,8 +108,7 @@
                   <nuxt-link :to="`/blog/${article._slug}`">
                     <img
                       class="object-cover w-full h-40 mb-4 rounded-t-lg md:h-48"
-                      :src="article.seo.social_media_image[0].url"
-                      alt="office laptop working"
+                      :src="article.cover[0].url"
                     />
                   </nuxt-link>
                   <div class="px-4 pb-4">
@@ -141,7 +139,7 @@
                     </h2>
                     <p
                       class="mb-4 text-sm font-light text-gray-500  md:text-base dark:text-gray-400 line-clamp-3 md:line-clamp-4"
-                      v-html="getExcerpt(article)"
+                      v-html="article.excerpt"
                     ></p>
                     <div class="flex items-center space-x-3">
                       <img
@@ -184,9 +182,5 @@ const defaultProfilePic = "https://demo-site-patterns.stream.prepr.io/w_2617/1mw
 
 const getPublishDate = (date) => {
   return useDateFormatter(date);
-};
-
-const getExcerpt = (article) => {
-  return article.content[0].body;
 };
 </script>

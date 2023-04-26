@@ -78,7 +78,7 @@
           </div>
         </div>
 
-        <div class="grid gap-8 md:hidden sm:grid-cols-2 lg:grid-cols-3">
+        <div class="md:hidden">
           <Carousel :items="data.products">
             <div class="rounded-lg h-[278px]">
               <div

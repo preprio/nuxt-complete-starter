@@ -43,7 +43,9 @@
             <nuxt-link
               to="/page-pattern/home"
               :class="
-                path == '/page-pattern' ? 'text-violet-600' : 'text-gray-900'
+                path.includes('/page-pattern')
+                  ? 'text-violet-600 font-semibold'
+                  : 'text-gray-700 font-medium'
               "
               class="block py-2 pr-4 border-t border-b border-gray-100 md:pl-3 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-violet-700 md:p-0 dark:text-gray-400 md:dark:hover:text-violet-500 dark:hover:bg-gray-700 dark:hover:text-violet-500 md:dark:hover:bg-transparent dark:border-gray-700"
               >Page
@@ -52,7 +54,11 @@
           <li>
             <nuxt-link
               to="/blog"
-              :class="path == '/blog' ? 'text-violet-600' : 'text-gray-900'"
+              :class="
+                path.includes('/blog')
+                  ? 'text-violet-600 font-semibold'
+                  : 'text-gray-700 font-medium'
+              "
               class="block py-2 pr-4 border-b border-gray-100 md:pl-3 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-violet-700 md:p-0 dark:text-gray-400 md:dark:hover:text-violet-500 dark:hover:bg-gray-700 dark:hover:text-violet-500 md:dark:hover:bg-transparent dark:border-gray-700"
               >Blog</nuxt-link
             >
@@ -73,9 +79,9 @@
             <nuxt-link
               to="/navigation"
               :class="
-                path == '/navigation'
+                path.includes('/navigation')
                   ? 'text-violet-600 font-semibold'
-                  : 'text-gray-900 font-medium'
+                  : 'text-gray-700 font-medium'
               "
               class="block py-2 pr-4 border-b border-gray-100 md:pl-3 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-violet-700 md:p-0 dark:text-gray-400 md:dark:hover:text-violet-500 dark:hover:bg-gray-700 dark:hover:text-violet-500 md:dark:hover:bg-transparent dark:border-gray-700"
               >Navigation</nuxt-link
