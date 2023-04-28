@@ -1,5 +1,5 @@
 <template>
-  <div class="grid mx-4 lg:mx-0">
+  <div class="grid mx-4 lg:mx-0" v-if="store.showEducationalBanners">
     <div class="rounded-xl bg-gray-50">
       <div class="px-8 py-7">
         <h2
@@ -36,6 +36,8 @@
 </template>
 
 <script setup>
+import { store } from "@/store/store.js";
+
 const props = defineProps({ title: String, type: String });
 const emit = defineEmits(["setSegment"]);
 const segment = ref('a');

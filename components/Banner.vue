@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-screen-xl mx-4 lg:mx-0">
+  <div class="max-w-screen-xl mx-4 lg:mx-0" v-if="store.showEducationalBanners">
     <div class="rounded-xl bg-violet-50">
       <div class="px-8 py-7">
         <h2
@@ -59,6 +59,8 @@
 </template>
 
 <script setup>
+import { store } from "@/store/store.js";
+
 const props = defineProps(["title", "copy", "url1"]);
 
 </script>

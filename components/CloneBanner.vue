@@ -1,25 +1,27 @@
 <template>
-  <div v-if="showBanner" class="container px-0 py-4 mx-auto">
-    <div class="max-w-screen-xl mx-4 lg:mx-0">
-      <div class="rounded-xl bg-violet-50">
-        <div class="items-center pt-6 pb-5 px-7 md:grid md:grid-cols-2">
-          <div>
+  <div v-if="showBanner" class="mb-4 mx-auto pt-20 md:pt-0">
+    <div class="mx-0">
+      <div class="bg-gray-100">
+        <div class="items-center pt-6 pb-1 px-7 md:grid md:grid-cols-8">
+          <div class="col-span-4 lg:col-span-5">
             <h2
-              class="inline text-2xl font-bold tracking-tight text-gray-900 sm:block"
+              class="inline text-xl font-bold tracking-tight text-gray-900 sm:block"
             >
               Showing content from your Prepr environment
             </h2>
             <div class="my-2 article">
-              This preview will reflect any content changes. You may clone this Nuxt.js
-              repository to see new models or fields. 
-              <br />
-              <br />
+              <div class="mb-">
+                Clone and edit this Nuxt.js repository to include your own models and fields. 
+              </div>
+              <div class="mb-3 font-medium">
+                Disconnect using the button below. The site will be reconnected to the default Patterns site content.
+              </div>
               <button
                 @click.prevent="resetToken"
-                class="text-white bg-violet-600 hover:bg-violet-700 focus:ring-4 border mb-4 md:mb-0 border-violet-600 hover:border-violet-700 focus:outline-none focus:ring-violet-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 text-center inline-flex items-center mr-2 dark:bg-violet-600 dark:hover:bg-violet-700 dark:focus:ring-violet-800 font-medium"
+                class="text-violet-600 focus:ring-4 mb-2 focus:outline-none focus:ring-violet-300 font-medium rounded-lg text-sm px5 py-2.5 mr-2 text-center inline-flex items-center mr-2 dark:bg-violet-600 font-medium"
               >
                 <svg
-                  fill="white"
+                  fill="currentColor"
                   class="w-4 h-5 mr-2 -ml-1"
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg"
@@ -31,16 +33,16 @@
                     d="M15.312 11.424a5.5 5.5 0 01-9.201 2.466l-.312-.311h2.433a.75.75 0 000-1.5H3.989a.75.75 0 00-.75.75v4.242a.75.75 0 001.5 0v-2.43l.31.31a7 7 0 0011.712-3.138.75.75 0 00-1.449-.39zm1.23-3.723a.75.75 0 00.219-.53V2.929a.75.75 0 00-1.5 0V5.36l-.31-.31A7 7 0 003.239 8.188a.75.75 0 101.448.389A5.5 5.5 0 0113.89 6.11l.311.31h-2.432a.75.75 0 000 1.5h4.243a.75.75 0 00.53-.219z"
                   ></path>
                 </svg>
-                Reset to default token
+                Disconnect your Prepr environment
               </button>
             </div>
           </div>
-          <div>
+          <div class="col-span-4 lg:col-span-3 md:text-right">
             <div>
               <a
                 href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fpreprio%2Fpatterns&env=PREPR_ACCESS_TOKEN&envDescription=Your%20Prepr%20Access%20token.%20Found%20in%20Settings%20%3E%20Access%20Tokens.&envLink=https%3A%2F%2Fdocs.prepr.io%2Freference%2Fgraphql%2Fv1%2Fauthorization&project-name=prepr-patterns&repository-name=prepr-patterns&demo-title=Prepr%20Patterns&demo-description=Clone%20the%20Nuxt%20project%20to%20start%20working%20on%20your%20front-end.&demo-url=https%3A%2F%2Fpatterns.prepr.io%2Fpage-pattern&demo-image=https%3A%2F%2Fassets-site.prepr.io%2F%2F19pw7mgmcc89-patterns-preview.png"
                 target="_blank"
-                class="float-right text-white bg-violet-600 hover:bg-violet-700 focus:ring-4 border mb-4 md:mb-0 focus:outline-none focus:ring-violet-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 text-center inline-flex items-center mr-2 dark:bg-violet-600 dark:hover:bg-violet-700 dark:focus:ring-violet-800 font-medium"
+                class="text-white bg-violet-600 hover:bg-violet-700 focus:ring-4 border mb-4 md:mb-0 focus:outline-none focus:ring-violet-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 text-center inline-flex items-center mr-2 dark:bg-violet-600 dark:hover:bg-violet-700 dark:focus:ring-violet-800 font-medium"
               >
                 <svg
                   viewBox="0 0 512 512"
@@ -56,7 +58,7 @@
               <a
                 href="https://github.com/preprio/patterns"
                 target="_blank"
-                class="float-right text-white bg-gray-900 hover:bg-gray-700 focus:ring-4 border mb-4 md:mb-0 focus:outline-none focus:ring-violet-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 text-center inline-flex items-center mr-2 dark:bg-violet-600 dark:hover:bg-violet-700 dark:focus:ring-violet-800 font-medium"
+                class="text-white bg-gray-900 hover:bg-gray-700 focus:ring-4 border mb-4 md:mb-0 focus:outline-none focus:ring-violet-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 text-center inline-flex items-center mr-2 dark:bg-violet-600 dark:hover:bg-violet-700 dark:focus:ring-violet-800 font-medium"
               >
                 <svg
                   fill="white"
