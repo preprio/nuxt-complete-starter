@@ -87,7 +87,6 @@ export const GetPageBySlug = gql`
       _id
       title
       _slug
-      type
       stack (personalize_for_segments: [$segment]){
         __typename
         ... on PageHeader {
@@ -173,7 +172,6 @@ export const GetStaticPageBySlug = gql`
       _id
       title
       _slug
-      type
       stack {
         __typename
         ... on PageHeader {
