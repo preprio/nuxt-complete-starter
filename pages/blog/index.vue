@@ -43,10 +43,10 @@ import SidebarList from "@/components/SidebarList.vue";
 import ArticleCard from "@/components/ArticleCard.vue";
 import Search from "@/components/Search.vue";
 import Authors from "@/components/Authors.vue";
-import { GetArticles } from "@/queries/preprQueries";
+import { GetArticles } from "@/queries/getArticles";
 
 const state = reactive({
-  categorySlug: "",
+  categorySlug: null,
   articles: [],
   articlesFiltered: [],
 });

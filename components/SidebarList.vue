@@ -23,9 +23,9 @@
             :class="currentCategory === category._slug && 'text-violet-700'"
           >
             <img class="flex-shrink-0 w-3.5 h-3.5" v-if="category.icon" :src="category.icon[0].url" />
-            <span class="flex-1 ml-3 whitespace-nowrap">{{
-              category.title
-            }}</span>
+            <span class="flex-1 ml-3 whitespace-nowrap">
+              {{category.title }}
+            </span>
           </a>
         </li>
       </ul>
@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import { GetCategories } from "@/queries/preprQueries";
+import { GetCategories } from "@/queries/getCategories";
 const categoryQuery = await useAsyncQuery(GetCategories);
 const categories = categoryQuery.data.value.Categories.items;
 const props = defineProps(["currentCategory"]);

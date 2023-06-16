@@ -86,7 +86,7 @@
 import { useRoute } from "vue-router";
 import NewsletterSubscribe from "@/components/NewsletterSubscribe.vue";
 import ArticleAuthor from "@/components/ArticleAuthor.vue";
-import { GetArticleBySlug } from "@/queries/preprQueries";
+import { GetArticleBySlug } from "@/queries/getArticleBySlug";
 
 const route = useRoute();
 const { data, error } = await useAsyncQuery(GetArticleBySlug, {

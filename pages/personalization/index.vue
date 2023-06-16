@@ -5,7 +5,7 @@
       copy="An example pattern with personalized web pages. This pattern shows 3 variants of web pages that showcases personalization using the Stack field. Use it to create personalized user experiences in your own web app."
       url1="https://docs.prepr.io/create-schema/personalization-pattern/"
     />
-    <SegmentSwitch title="Try it out!" @set-segment="changeSegment"/>
+    <SegmentSwitch title="Try it out!" @set-segment="changeSegment" :currentSegment="state.routeSegment" />
   </div>
   
   <component
@@ -17,9 +17,6 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
-import { useRoute } from "vue-router";
-
 import Banner from "@/components/Banner";
 import SegmentSwitch from "@/components/SegmentSwitch";
 import PageHeader from "@/components/PageHeader";
@@ -27,13 +24,17 @@ import ImageAndText from "@/components/ImageAndText";
 import ArticleCollection from "@/components/ArticleCollection";
 import ProductCollection from "@/components/ProductCollection";
 import CallToAction from "@/components/CallToAction";
-import {GetPageBySlug} from "@/queries/preprQueries";
+import {GetPageBySlug} from "@/queries/getPageBySlug";
+import {useRoute} from "vue-router";
 
 const contentItemID = ref("");
 const clientId = ref("prepr");
+const router = useRouter();
+const route = useRoute();
 
 const state = reactive({
   clientId: "prepr",
+  routeSegment: route.query.segment ? route.query.segment : "",
   stack: [],
 });
 
@@ -63,7 +64,7 @@ const { data, error, refresh } = await useAsyncQuery({
   query: GetPageBySlug,
   variables: {
     slug: "home-page-personalization",
-    segment: ""
+    segment: state.routeSegment ? state.routeSegment : ""
   },
   clientId: clientId,
 });
@@ -85,7 +86,22 @@ const changeSegment = async (segment) => {
   });
 
   state.stack = data.value.Page.stack;
-  refresh();
+
+  if (segment) {
+    state.routeSegment = segment;
+    router.push({
+      query: {
+        segment: segment ? segment : "",
+      }
+    })
+  } else {
+    state.routeSegment = segment;
+    router.push({
+      query: null
+    })
+  }
+
+  await refresh();
 };
 
 

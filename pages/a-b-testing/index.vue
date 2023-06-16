@@ -16,7 +16,6 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
 import { useRoute } from "vue-router";
 
 import Banner from "@/components/Banner";
@@ -26,7 +25,7 @@ import ImageAndText from "@/components/ImageAndText";
 import ArticleCollection from "@/components/ArticleCollection";
 import ProductCollection from "@/components/ProductCollection";
 import CallToAction from "@/components/CallToAction";
-import { GetStaticPageBySlug } from "@/queries/preprQueries";
+import { GetStaticPageBySlug } from "@/queries/getStaticPageBySlug";
 
 const contentItemID = ref("");
 const clientId = ref("prepr");

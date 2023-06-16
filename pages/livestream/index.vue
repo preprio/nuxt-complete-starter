@@ -42,11 +42,9 @@ import LivestreamCard from "@/components/LivestreamCard";
 import Banner from "@/components/Banner";
 import Hero from "@/components/Hero";
 
-import {
-  GetUpcomingLiveStreams,
-  GetRecordedLiveStreams,
-  GetStreamBySlug,
-} from "@/queries/preprQueries";
+import { GetStreamBySlug } from "@/queries/getStreamBySlug";
+import { GetRecordedLiveStreams } from "@/queries/getRecordedLiveStreams";
+import { GetUpcomingLiveStreams } from "@/queries/getUpcomingLiveStreams";
 
 const flowbite = useFlowbite();
 const today = new Date().toJSON().slice(0, 10);

@@ -29,7 +29,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import { GetStreamBySlug } from "@/queries/preprQueries";
+import { GetStreamBySlug } from "@/queries/getStreamBySlug";
 
 import LiveBadge from "@/components/Badges/LiveBadge.vue";
 import Speakers from "@/components/Speakers.vue";

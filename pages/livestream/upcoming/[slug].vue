@@ -102,7 +102,7 @@
 
 <script setup>
 import { useRoute } from "vue-router";
-import { GetStreamBySlug } from "@/queries/preprQueries";
+import { GetStreamBySlug } from "@/queries/getStreamBySlug";
 import { store } from "@/store/store.js";
 
 import Speakers from "@/components/Speakers.vue";

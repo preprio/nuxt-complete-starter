@@ -21,13 +21,12 @@ import { reactive } from "vue";
 import { useRoute } from "vue-router";
 import { useFlowbite } from "@/helpers/flowbite";
 import Banner from "@/components/Banner";
-import ErrorMessage from "@/components/ErrorMessage";
 import PageHeader from "@/components/PageHeader";
 import ImageAndText from "@/components/ImageAndText";
 import ArticleCollection from "@/components/ArticleCollection";
 import ProductCollection from "@/components/ProductCollection";
 import CallToAction from "@/components/CallToAction";
-import { GetPageBySlug } from "@/queries/preprQueries";
+import { GetPageBySlug } from "@/queries/getPageBySlug";
 
 const flowbite = useFlowbite();
 const route = useRoute();

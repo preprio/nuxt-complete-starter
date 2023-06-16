@@ -133,7 +133,7 @@
 </template>
 
 <script setup>
-import { GetNavigation } from "@/queries/preprQueries";
+import { GetNavigation } from "@/queries/getNavigation";
 import { useFlowbite } from "@/helpers/flowbite";
 const flowbite = useFlowbite();
 

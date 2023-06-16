@@ -1,6 +1,5 @@
 <template>
-  <div class="container mx-auto">
-    <Hero />
+  <div class="container mx-auto mt-10">
     <Hero
       title="Prepr Patterns"
       description="This site provides examples of how Prepr can be used to structure and build various webpages. We offer examples for building blogs, live stream sections, navigation structures, landing pages and even personalized webpages or an A/B testing setup."

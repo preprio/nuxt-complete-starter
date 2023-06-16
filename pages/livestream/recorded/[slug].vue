@@ -27,7 +27,7 @@
 
 <script setup>
 import { useRoute } from "vue-router";
-import { GetStreamBySlug } from "@/queries/preprQueries";
+import { GetStreamBySlug } from "@/queries/getStreamBySlug";
 
 import RecordedBadge from "@/components/Badges/RecordedBadge.vue";
 import Speakers from "@/components/Speakers.vue";
