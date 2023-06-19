@@ -2,7 +2,7 @@
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
-[Stackblitz demo](https://stackblitz.com/edit/nuxt-complete-starter-prepr-cms)
+[Stackblitz demo](https://stackblitz.com/edit/nuxt-starter-prepr-cms)
 
 ## Setup
 
