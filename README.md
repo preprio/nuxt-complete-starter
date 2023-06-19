@@ -2,6 +2,8 @@
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
+[Stackblitz demo](https://stackblitz.com/edit/nuxt-complete-starter-prepr-cms)
+
 ## Setup
 
 Make sure to install the dependencies:
