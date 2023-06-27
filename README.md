@@ -1,6 +1,6 @@
 # Nuxt 3 Starter
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Look at the [Complete guide to Nuxt and Prepr personalization](https://docs.prepr.io/connecting-front-end-apps/nuxt-complete-guide) to learn more.
 
 [Stackblitz demo](https://stackblitz.com/edit/nuxt-starter-prepr-cms)
 
