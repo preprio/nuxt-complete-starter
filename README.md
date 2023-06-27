@@ -1,8 +1,6 @@
 # Nuxt 3 Starter
 
-Look at the [Complete guide to Nuxt and Prepr personalization](https://docs.prepr.io/connecting-front-end-apps/nuxt-complete-guide) to learn more.
-
-Check out the [Stackblitz demo](https://stackblitz.com/edit/nuxt-starter-prepr-cms) for zero installation.
+Look at the [Complete guide to Nuxt and Prepr personalization](https://docs.prepr.io/connecting-front-end-apps/nuxt-complete-guide) to learn more or check out the [Stackblitz demo](https://stackblitz.com/edit/nuxt-starter-prepr-cms) for zero installation.
 
 ## Setup
 
