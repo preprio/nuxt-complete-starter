@@ -2,7 +2,7 @@
 
 Look at the [Complete guide to Nuxt and Prepr personalization](https://docs.prepr.io/connecting-front-end-apps/nuxt-complete-guide) to learn more.
 
-[Stackblitz demo](https://stackblitz.com/edit/nuxt-starter-prepr-cms)
+Check out the [Stackblitz demo](https://stackblitz.com/edit/nuxt-starter-prepr-cms) for zero installation.
 
 ## Setup
 
