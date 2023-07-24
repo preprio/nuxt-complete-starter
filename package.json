@@ -11,7 +11,7 @@
   "devDependencies": {
     "@nuxt/vite-builder": "^3.4.2",
     "@nuxtjs/apollo": "^5.0.0-alpha.6",
-    "@nuxtjs/google-fonts": "^3.0.0",
+    "@nuxtjs/google-fonts": "^3.0.2",
     "@tailwindcss/line-clamp": "^0.4.2",
     "autoprefixer": "^10.4.13",
     "nuxt": "^3.6.1",
