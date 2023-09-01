@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto md:px-0">
-    <Banner 
+    <Banner
       title="Live stream pattern"
       copy="A common UX pattern for live stream events that leverages the live stream features in Prepr. This pattern shows not only live events, but also upcoming and recorded live streams. Learn more about <a href='https://docs.prepr.io/managing-content/live-video-stream'>live streaming in Prepr</a> on our Documentation site."
       url1="https://docs.prepr.io/create-schema/live-stream-pattern/"
@@ -42,9 +42,9 @@ import LivestreamCard from "@/components/LivestreamCard";
 import Banner from "@/components/Banner";
 import Hero from "@/components/Hero";
 
-import { GetStreamBySlug } from "@/queries/getStreamBySlug";
-import { GetRecordedLiveStreams } from "@/queries/getRecordedLiveStreams";
-import { GetUpcomingLiveStreams } from "@/queries/getUpcomingLiveStreams";
+import { GetStreamBySlug } from "~/queries/get-stream-by-slug";
+import { GetRecordedLiveStreams } from "~/queries/get-recorded-live-streams";
+import { GetUpcomingLiveStreams } from "~/queries/get-upcoming-live-streams";
 
 const flowbite = useFlowbite();
 const today = new Date().toJSON().slice(0, 10);

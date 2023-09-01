@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto md:px-0">
-    <Banner 
+    <Banner
       title="Blog pattern"
       copy="A typical pattern for blog articles and news sections. It also incorporates a setup to show related authors and categories. This pattern shows a summary of articles and a specific article in detail. In this pattern we also showcase the recommendations feature in Prepr."
       url1="https://docs.prepr.io/create-schema/blog-pattern/"
@@ -43,7 +43,7 @@ import SidebarList from "@/components/SidebarList.vue";
 import ArticleCard from "@/components/ArticleCard.vue";
 import Search from "@/components/Search.vue";
 import Authors from "@/components/Authors.vue";
-import { GetArticles } from "@/queries/getArticles";
+import { GetArticles } from "~/queries/get-articles";
 
 const state = reactive({
   categorySlug: null,

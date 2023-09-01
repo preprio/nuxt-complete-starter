@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import { GetCategories } from "@/queries/getCategories";
+import { GetCategories } from "~/queries/get-categories";
 const categoryQuery = await useAsyncQuery(GetCategories);
 const categories = categoryQuery.data.value.Categories.items;
 const props = defineProps(["currentCategory"]);

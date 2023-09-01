@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto md:px-0">
-    <Banner 
+    <Banner
       title="Live stream pattern"
       copy="A common UX pattern for live stream events that leverages the live stream features in Prepr. This pattern shows not only live events, but also upcoming and recorded live streams. Learn more about <a href='https://docs.prepr.io/managing-content/live-video-stream'>live streaming in Prepr</a> on our Documentation site."
       url1="https://docs.prepr.io/create-schema/live-stream-pattern/"
@@ -27,7 +27,7 @@
 
 <script setup>
 import { useRoute } from "vue-router";
-import { GetStreamBySlug } from "@/queries/getStreamBySlug";
+import { GetStreamBySlug } from "~/queries/get-stream-by-slug";
 
 import RecordedBadge from "@/components/Badges/RecordedBadge.vue";
 import Speakers from "@/components/Speakers.vue";

@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto md:px-0">
-    <Banner 
+    <Banner
       title="Navigation pattern"
       copy="Navigation is a key structure that is implemented in every web app. This pattern shows parent and child relationships between menu items within a navigation."
       url1="https://docs.prepr.io/create-schema/navigation-pattern/"
@@ -114,7 +114,7 @@
                       v-for="child in navigationItem.children"
                       :key="child._id"
                     >
-          
+
                       <a
                         href="#"
                         class="block px-4 py-2 text-base font-semibold leading-none hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
@@ -133,7 +133,7 @@
 </template>
 
 <script setup>
-import { GetNavigation } from "@/queries/getNavigation";
+import { GetNavigation } from "~/queries/get-navigation";
 import { useFlowbite } from "@/helpers/flowbite";
 const flowbite = useFlowbite();
 

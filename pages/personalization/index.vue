@@ -1,13 +1,13 @@
 <template>
   <div class="grid max-w-screen-xl gap-4 mx-auto lg:grid-cols-2">
-    <Banner 
+    <Banner
       title="Personalization pattern"
       copy="An example pattern with personalized web pages. This pattern shows 3 variants of web pages that showcases personalization using the Stack field. Use it to create personalized user experiences in your own web app."
       url1="https://docs.prepr.io/create-schema/personalization-pattern/"
     />
     <SegmentSwitch title="Try it out!" @set-segment="changeSegment" :currentSegment="state.routeSegment" />
   </div>
-  
+
   <component
     v-for="element in state.stack"
     :key="element._id"
@@ -24,7 +24,7 @@ import ImageAndText from "@/components/ImageAndText";
 import ArticleCollection from "@/components/ArticleCollection";
 import ProductCollection from "@/components/ProductCollection";
 import CallToAction from "@/components/CallToAction";
-import {GetPageBySlug} from "@/queries/getPageBySlug";
+import {GetPageBySlug} from "~/queries/get-page-by-slug";
 import {useRoute} from "vue-router";
 
 const contentItemID = ref("");
