@@ -41,9 +41,9 @@
         >
           <li>
             <nuxt-link
-              to="/page-pattern/home"
+              to="/page/home"
               :class="
-                path.includes('/page-pattern')
+                path.includes('/page')
                   ? 'text-violet-600 font-semibold'
                   : 'text-gray-700 font-medium'
               "

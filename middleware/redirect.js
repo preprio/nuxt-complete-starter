@@ -1,6 +1,6 @@
 export default defineNuxtRouteMiddleware((to, from) => {
-  if (to.name == 'page-pattern') {
+  if (to.name === 'page') {
     console.log(to)
-    return navigateTo('/page-pattern/home')
+    return navigateTo('/page/home')
   }
 })
