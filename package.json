@@ -9,24 +9,24 @@
     "start": "node .output/server/index.mjs"
   },
   "devDependencies": {
-    "@nuxt/vite-builder": "^3.4.2",
-    "@nuxtjs/apollo": "^5.0.0-alpha.6",
-    "@nuxtjs/google-fonts": "^3.0.0",
-    "@tailwindcss/line-clamp": "^0.4.2",
-    "autoprefixer": "^10.4.13",
-    "nuxt": "^3.6.1",
-    "postcss": "^8.4.19",
-    "tailwindcss": "^3.2.4"
+    "@nuxt/vite-builder": "^3.7.4",
+    "@nuxtjs/apollo": "^5.0.0-alpha.7",
+    "@nuxtjs/google-fonts": "^3.0.2",
+    "@tailwindcss/line-clamp": "^0.4.4",
+    "autoprefixer": "^10.4.16",
+    "nuxt": "^3.7.4",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.3"
   },
   "dependencies": {
-    "@mux/mux-player": "^1.8.0",
+    "@mux/mux-player": "^1.15.0",
     "@vue/apollo-composable": "^4.0.0-beta.2",
-    "flowbite": "^1.6.5",
+    "consola": "^3.2.3",
+    "flowbite": "^1.8.1",
     "install": "^0.13.0",
-    "npm": "9.7.2",
-    "consola" : "^3.0.0",
+    "npm": "^9.7.2",
     "vue-slick-carousel": "^1.0.6",
-    "vue-ssr-carousel": "^1.9.0"
+    "vue-ssr-carousel": "^1.9.1"
   },
   "engines": {
     "node": "^18.0.0"
