@@ -1,83 +1,67 @@
 export const GetPageBySlug = gql`
-  query ($slug: String, $segment: String!) {
-    Page(slug: $slug) {
-      _id
-      title
-      _slug
-      stack (personalize_for_segments: [$segment]){
-        __typename
-        ... on PageHeader {
-          heading
-          cta_url
-          cta_label
-          image {
-            url(width: 1600)
-          }
-          _id
-          text
-        }
-        ... on ArticleCollection {
-          _id
-          articles {
+    query GetPageBySlug($slug: String) {
+        Page(slug: $slug) {
+            title
             _id
-            title
-            excerpt
-            cover {
-                url(width: 384, height: 448)
-            }
-            _slug
-            authors {
-              full_name
-              profile_pic {
-                url
-                original_name
-              }
-              _read_time
-              _created_on
-              _publish_on
-            }
-            _publish_on
             content {
-              ... on Text {
-                body
-              }
+                __typename
+                ... on Hero {
+                    _id
+                    sub_heading
+                    image {
+                        url(preset: "Hero", width: 2000)
+                        height
+                        width
+                    }
+                    _context {
+                        variant_key
+                    }
+                    heading
+                    buttons {
+                        button_type
+                        text
+                        external_url
+                        link {
+                            ... on Category {
+                                _slug
+                            }
+                            ... on Page {
+                                _slug
+                            }
+                            ... on Post {
+                                _slug
+                            }
+                        }
+                    }
+                }
+                ... on Feature {
+                    _id
+                    heading
+                    sub_heading
+                    button {
+                        button_type
+                        text
+                        external_url
+                        link {
+                            ... on Category {
+                                _slug
+                            }
+                            ... on Page {
+                                _slug
+                            }
+                            ... on Post {
+                                _slug
+                            }
+                        }
+                    }
+                    _context {
+                        variant_key
+                    }
+                    image_position
+                    image {
+                        url(width: 870, height: 570)
+                    }
+                }
             }
-          }
-          heading
-          cta_label
-          cta_url
-          description
         }
-        ... on ImageAndText {
-          image {
-            url(width: 800)
-          }
-          text
-          title
-          image_position
-          _id
-        }
-        ... on ProductCollection {
-          heading
-          description
-          cta_url
-          cta_label
-          products {
-            price
-            title
-            image
-            description
-          }
-        }
-        ... on CallToAction {
-          background_image {
-            url(width: 1600)
-          }
-          cta_label
-          description
-          heading
-        }
-      }
-    }
-  }
-`;
+    }`;
