@@ -1,6 +1,6 @@
 # Nuxt Complete Starter
 
-Look at the [Complete guide to Nuxt and Prepr personalization](https://docs.prepr.io/connecting-front-end-apps/nuxt-complete-guide) to learn more.
+Look at the [Complete guide to Nuxt and Prepr](https://docs.prepr.io/connecting-front-end-apps/nuxt-complete-guide) to learn more.
 
 ## Setup
 
