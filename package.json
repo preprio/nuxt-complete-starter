@@ -19,5 +19,8 @@
   "devDependencies": {
     "@nuxtjs/apollo": "^5.0.0-alpha.16",
     "@types/node": "^22.19.17"
+  },
+  "overrides": {
+    "devalue": "^5.8.1"
   }
 }
