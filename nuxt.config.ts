@@ -13,7 +13,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      PREPR_GRAPHQL_URL: process.env.PREPR_GRAPHQL_URL as string,
+      PREPR_GRAPHQL_URL: (process.env.PREPR_GRAPHQL_URL || 'https://graphql.prepr.io/ac_e54beab08406dd41fcdead2bef10364f442559f67fe86ebb0ac7aa6e3a1a4605') as string,
     },
   },
   plugins: [
@@ -22,7 +22,7 @@ export default defineNuxtConfig({
   apollo: {
     clients: {
       default: {
-        httpEndpoint: process.env.PREPR_GRAPHQL_URL as string, // must be present but will be overridden in plugin
+        httpEndpoint: (process.env.PREPR_GRAPHQL_URL || 'https://graphql.prepr.io/ac_e54beab08406dd41fcdead2bef10364f442559f67fe86ebb0ac7aa6e3a1a4605') as string, // must be present but will be overridden in plugin
       },
     },
   }
