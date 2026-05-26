@@ -5,7 +5,7 @@ import { setContext } from "@apollo/client/link/context";
 export default defineNuxtPlugin((nuxtApp) => {
   const runtimeConfig = useRuntimeConfig();
   const { $apollo } = useNuxtApp();
-  let preprEndpoint = runtimeConfig.public.PREPR_GRAPHQL_URL;
+  let preprEndpoint = runtimeConfig.public.PREPR_GRAPHQL_URL || 'https://graphql.prepr.io/ac_5e48636ec968b4fe9b7490b0fc4f7702e51873418ae2acbc58c6431d9fe27429';
 
   const authLink = setContext(async (_, from) => {
     return {}
