@@ -13,4 +13,8 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+  runtimeConfig: {
+    // Server-only: set with NUXT_PREPR_GRAPHQL_URL in .env or on your host.
+    preprGraphqlUrl: '',
+  },
 })
