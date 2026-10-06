@@ -14,6 +14,9 @@ importers:
       '@nuxt/fonts':
         specifier: ^0.14.0
         version: 0.14.0(@nuxt/schema@4.6.0)(confbox@0.3.1)(db0@0.3.4)(dotenv@18.0.5)(esbuild@0.28.2)(giget@3.3.1)(ioredis@5.11.1)(jiti@2.7.0)(magic-string@1.4.3)(mlly@1.8.2)(rolldown@1.2.12)(rollup@4.64.0)(vite@8.3.3(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))
+      '@preprio/toolkit':
+        specifier: ^0.4.3
+        version: 0.4.3(vue@3.5.43)
       '@tailwindcss/vite':
         specifier: ^4.3.3
         version: 4.3.3(vite@8.3.3(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))
@@ -1125,6 +1128,27 @@ packages:
   '@poppinss/exception@1.2.3':
     resolution: {integrity: sha512-dCED+QRChTVatE9ibtoaxc+WkdzOSjYTKi/+uacHWIsfodVfpsueo3+DKpgU5Px8qXjgmXkSvhXvSCz3fnP9lw==}
 
+  '@preprio/toolkit@0.4.3':
+    resolution: {integrity: sha512-tlRDGK54GPlSt3jYqoPDCq62EAwgE36zPOS2c/w5Al7JoEO0LRGYdiZyzYYP6VmBWKf6LfTm+s2R0b9pFb8Scg==}
+    engines: {node: '>=18.17'}
+    peerDependencies:
+      next: '>=13'
+      react: '>=17'
+      react-dom: '>=17'
+      svelte: '>=5'
+      vue: '>=3.3'
+    peerDependenciesMeta:
+      next:
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
+      svelte:
+        optional: true
+      vue:
+        optional: true
+
   '@repeaterjs/repeater@3.1.0':
     resolution: {integrity: sha512-TaoVksZRSx2KWYYpyLQtMQXXeS98VsgZImzW65xmiVgbYhXLk+aEsmzPLirqVuE4/XuUapH2iMtxUzaBNDzdSQ==}
 
@@ -1583,6 +1607,9 @@ packages:
     resolution: {integrity: sha512-m1QFg+U+3yPOnP1xSYJ73UIRxLOXdts1JOhiOiyPYqEsALgrXFFINvgUaD6R6iNvaBFAjHllBCbkfx4FuOdpaA==}
     engines: {node: '>=20'}
     hasBin: true
+
+  '@vercel/stega@1.1.0':
+    resolution: {integrity: sha512-DFOm3Gk78nKDkppQEG5aj8Wj8R8hPKu/xrz4Rtp0AfiaNbZNCoJbxn7VI6iMxqhGeLdUDy/8mTuTWMz/izAtPA==}
 
   '@vitejs/plugin-vue-jsx@5.1.6':
     resolution: {integrity: sha512-YXvi4as2clxt6DFw5+a0tTA97ntiQXm/raR8ofNj3aNwwdlVGTiG2gp7EvfZW17P50acL/9bP0ccF4XnqNmlgA==}
@@ -3498,6 +3525,14 @@ packages:
   powershell-utils@0.2.1:
     resolution: {integrity: sha512-C+y9x90UElAddDZmV4qOx9W53B61PO7cIqWz2dQsWlwswuq4mr8NEwytdGKboYbQlGZ3awrkTeNvcZiZNHnQ8A==}
     engines: {node: '>=20'}
+
+  preact@10.29.8:
+    resolution: {integrity: sha512-ej2aVZ+vZ8WO7tvlQWRM9N63A0KzF9q4mWJfDUHgYaIofWY9hu74QdnQrjoPMmZi2/nZ5gN0bJCQF49xQqx09Q==}
+    peerDependencies:
+      preact-render-to-string: '>=5'
+    peerDependenciesMeta:
+      preact-render-to-string:
+        optional: true
 
   pretty-bytes@7.2.0:
     resolution: {integrity: sha512-T2kroepGB5DRVbkN/nOpW03+VRWqdtJhZNuCW3wYk3chdPjgi4GcTBOaxWfHq1MIM0ypidxsSWbQaAiRpxnXmg==}
@@ -5856,6 +5891,15 @@ snapshots:
 
   '@poppinss/exception@1.2.3': {}
 
+  '@preprio/toolkit@0.4.3(vue@3.5.43)':
+    dependencies:
+      '@vercel/stega': 1.1.0
+      preact: 10.29.8
+    optionalDependencies:
+      vue: 3.5.43
+    transitivePeerDependencies:
+      - preact-render-to-string
+
   '@repeaterjs/repeater@3.1.0': {}
 
   '@rolldown/binding-android-arm-eabi@1.2.12':
@@ -6197,6 +6241,8 @@ snapshots:
       - encoding
       - rollup
       - supports-color
+
+  '@vercel/stega@1.1.0': {}
 
   '@vitejs/plugin-vue-jsx@5.1.6(vite@8.3.3(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(vue@3.5.43)':
     dependencies:
@@ -8310,6 +8356,8 @@ snapshots:
       source-map-js: 1.2.2
 
   powershell-utils@0.2.1: {}
+
+  preact@10.29.8: {}
 
   pretty-bytes@7.2.0: {}
 

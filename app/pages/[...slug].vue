@@ -11,6 +11,9 @@ if (!data.value?.Page) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found' })
 }
 const page = data.value.Page
+
+// The tracking pixel reads this tag to record a View event for the page.
+useHead({ meta: [{ property: 'prepr:id', content: page._id }] })
 </script>
 
 <template>

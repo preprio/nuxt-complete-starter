@@ -8,6 +8,7 @@ export function usePrepr<TResult, TVariables>(
   document: TypedDocumentNode<TResult, TVariables>,
   variables: TVariables,
 ) {
+
   return useAsyncData(key, async (nuxtApp) => {
     const { data, errors } = await $fetch<{ data: TResult, errors?: { message: string }[] }>(nuxtApp.$config.preprGraphqlUrl, {
       method: 'POST',
