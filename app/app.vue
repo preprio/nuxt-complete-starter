@@ -1,4 +1,13 @@
+<script setup lang="ts">
+useHead({
+  htmlAttrs: { lang: 'en' },
+  title: 'Prepr Nuxt complete starter',
+  meta: [{ name: 'description', content: 'Showing the power of personalization and A/B testing' }],
+})
+</script>
+
 <template>
   <NuxtRouteAnnouncer />
-  <h1 class="text-3xl font-bold underline">My home page</h1>
+  <NavBar />
+  <NuxtPage />
 </template>
