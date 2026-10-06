@@ -5,7 +5,8 @@ defineProps<{ item: HeroFragment }>()
 </script>
 
 <template>
-  <section class="bg-primary-50">
+  <!-- data-prepr-variant-key on the section records an impression for the variant -->
+  <section class="bg-primary-50" :data-prepr-variant-key="item._context?.variant_key">
     <div class="mx-auto max-w-8xl p-spacing flex flex-col items-center md:flex-row gap-8 py-10 lg:py-20">
       <div class="basis-6/12">
         <h1 class="text-mb-5xl lg:text-7xl text-secondary-700 font-medium break-words text-balance">
@@ -16,7 +17,8 @@ defineProps<{ item: HeroFragment }>()
         </p>
         <div class="flex gap-4 mt-8 xl:mt-10">
           <div>
-            <a href="#"><Button>{{ item.buttons[0]?.text }}</Button></a>
+            <!-- data-prepr-variant-event on the link records a click (conversion) -->
+            <a href="#" data-prepr-variant-event><Button>{{ item.buttons[0]?.text }}</Button></a>
           </div>
         </div>
       </div>
