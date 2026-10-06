@@ -16,5 +16,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     // Server-only: set with NUXT_PREPR_GRAPHQL_URL in .env or on your host.
     preprGraphqlUrl: '',
+    // 'preview' shows the Prepr preview toolbar and lets it override segments
+    // and A/B variants. Set with NUXT_PREPR_ENV.
+    preprEnv: 'production',
   },
 })
