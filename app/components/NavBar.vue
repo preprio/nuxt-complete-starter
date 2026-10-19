@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const navItems = [
-  { text: 'Find a car', href: '/catalog' },
+  { text: 'Find a car', href: '#' },
   { text: 'About Acme', href: '#' },
   { text: 'Blog', href: '#' },
   { text: 'Contacts', href: '#' },
