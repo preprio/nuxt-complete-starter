@@ -1,0 +1,183 @@
+---
+title: "Set up a Nuxt project with static components"
+description: "Guide to creating a Nuxt website with static components, including installation, styling, navigation, and static content setup."
+
+# openGraph:
+#   images:
+#     - url: TODO_REPLACE
+#       width: 1200
+#       height: 630
+#       alt: TODO_REPLACE
+# twitter:
+#   images:
+#     - TODO_REPLACE
+---
+
+import { Callout, Steps, Tabs } from 'nextra/components'
+import Caption from '@/components/caption'
+
+# Set up a Nuxt project
+
+*The instructions below will guide you through the first step of the Nuxt complete guide.
+These show you how to create a Nuxt website with static components.*
+
+![TODO-SCREENSHOT: Nuxt site with static components](https://assets-site.prepr.io/2hkb8jfxzj9y//nuxt-website-with-static-components.png)
+<Caption
+  text="Nuxt website with static text and images."
+  >
+  </Caption>
+
+## Create a Nuxt website with static components
+
+If you have an existing Nuxt project then you can skip this section and continue with the next section to [make your Nuxt project dynamic with Prepr content](/connecting-a-front-end-framework/nuxtjs/nuxt-complete-guide/step-2-make-the-project-dynamic).
+Otherwise, let's get started.
+
+ <Steps>
+
+### Install a Nuxt project
+
+1. Open a terminal, go to your development projects folder and execute the command below to create a new Nuxt project called `nuxt-complete-starter` from the minimal template.
+
+        ```bash copy
+        npm create nuxt@latest nuxt-complete-starter -- --template minimal
+        ```
+
+        Choose `npm` as the package manager and skip the official modules for now. You'll add the module you need in the next section.
+
+        ![TODO-SCREENSHOT: options when installing Nuxt](NEW)
+
+2. When the project is successfully created, go to the `nuxt-complete-starter` folder, the root directory of the project, and run the project with the following commands in the terminal:
+
+        ```bash copy
+        cd nuxt-complete-starter
+        ```
+
+        ```bash copy
+        npm run dev
+        ```
+
+3. You should now be able to view your app on your localhost, for example, `http://localhost:3000/`.
+
+4. Open the Nuxt project with your preferred code editor.
+
+<Callout type="info">
+Nuxt 4 keeps your application code in the `app` folder.
+All the files you create in this guide go in `app`, except for the configuration files in the project root and the server middleware in `server`, which you'll add in step 3.
+</Callout>
+
+5. Replace the code in the `app/app.vue` file with the following code to display your home page:
+
+        ```vue filename="./app/app.vue" copy
+        <template>
+          <h1>My home page</h1>
+        </template>
+        ```
+
+You should now see something like the image below on your localhost.
+
+![TODO-SCREENSHOT: Empty Nuxt site](https://assets-site.prepr.io/zzx9ppdm4w7//nuxt-empty-home-page.png)
+
+### Install Tailwind CSS and Nuxt Fonts
+
+Follow the steps below to set up Tailwind styling and the Ubuntu font used by the Acme Lease website.
+
+1. In the terminal, stop the server you started in the above step (`CTRL-C`) and install Tailwind CSS to make styling easier in the components you'll create below.
+
+        ```bash copy
+        npm install tailwindcss @tailwindcss/vite
+        ```
+
+2. Add the [Nuxt Fonts](https://fonts.nuxt.com/) module. It downloads the fonts you use in your CSS and serves them from your own website.
+
+        ```bash copy
+        npx nuxt module add fonts
+        ```
+
+3. Create an `app/assets/css/main.css` file to import Tailwind CSS and to set up the font and some additional colors and spacing:
+
+        @@code guide-step-1 app/assets/css/main.css@@
+
+        The `p-spacing` utility gives every section the same horizontal page gutter, which grows with the screen width.
+        Nuxt Fonts finds the `Ubuntu` font in `--font-sans` and downloads it for you.
+
+4. Replace the code in `nuxt.config.ts` to add the Tailwind CSS plugin, your new `main.css` file and the font weights you need.
+
+        @@code guide-step-1 nuxt.config.ts@@
+
+5. Test that Tailwind is correctly installed by updating the `app/app.vue` file as follows:
+
+        @@code guide-step-1^ app/app.vue@@
+
+6. Restart the localhost with `npm run dev`. You should see the updated styling like in the image below:
+
+        ![TODO-SCREENSHOT: Nuxt empty site - updated styling](https://assets-site.prepr.io/2nk1omhmhiz1//nuxt-empty-home-page-updated-styling.png)
+
+### Add a simple navigation bar
+
+1. Create a `components` folder in the `app` directory and add the following three components to your project to display a navigation bar at the top of your website.
+
+        <Tabs items={['Button', 'Logo', 'Navigation bar']}>
+        <Tabs.Tab>
+        @@code guide-step-1 app/components/Button.vue@@
+        </Tabs.Tab>
+        <Tabs.Tab>
+        @@code guide-step-1 app/components/Logo.vue@@
+        </Tabs.Tab>
+        <Tabs.Tab>
+        @@code HEAD app/components/NavBar.vue@@
+        </Tabs.Tab>
+        </Tabs>
+
+<Callout type="info">
+Nuxt [auto-imports](https://nuxt.com/docs/guide/directory-structure/app/components) every component in the `components` folder, so `NavBar.vue` can use `<Logo>` and `<Button>` without import statements.
+</Callout>
+
+2. Create a `pages` folder in the `app` directory and add a file called `[...slug].vue` to it.
+This file name creates a [catch-all route](https://nuxt.com/docs/guide/directory-structure/app/pages#catch-all-route) to all your pages, including the home page.
+
+        ```vue filename="./app/pages/[...slug].vue" copy
+        <template>
+          <h1>My home page</h1>
+        </template>
+        ```
+
+3. Replace the code in `app/app.vue` to show the navigation bar above every page and set the page title and description.
+
+        @@code guide-step-1 app/app.vue@@
+
+        `<NuxtPage />` renders the page that matches the URL, in this case `[...slug].vue`.
+
+4. Restart the localhost server with `npm run dev` in the terminal and go back to your browser. You should see the navigation bar and your heading text like in the image below.
+
+        ![TODO-SCREENSHOT: Update page with navigation bar](https://assets-site.prepr.io/79ilgxbkb5jd//nuxt-empty-home-page-nav-bar.png)
+
+Once your Nuxt project is created and working, you can create a static page with components.
+
+### Create static components
+
+In this step, you'll create a static version of the page including two front-end components.
+One for a *Hero* section at the top of the page and another for *Feature* sections to highlight features for the company.
+Add these components to the front end as follows:
+
+1. In the `app/components` folder, create new files called `HeroSection.vue` and `FeatureSection.vue` and copy the code below to construct these components.
+
+        <Tabs items={['Hero section','Feature section']}>
+        <Tabs.Tab>
+        @@code guide-step-1 app/components/HeroSection.vue@@
+        </Tabs.Tab>
+        <Tabs.Tab>
+        @@code guide-step-1 app/components/FeatureSection.vue@@
+        </Tabs.Tab>
+        </Tabs>
+
+2. Replace the code in `app/pages/[...slug].vue` with the code below to display the components with static data.
+
+        @@code guide-step-1 app/pages/[...slug].vue@@
+
+When you go back to your page in the browser, you should now see something like the image below.
+
+![TODO-SCREENSHOT: Nuxt site with static components](https://assets-site.prepr.io/2hkb8jfxzj9y//nuxt-website-with-static-components.png)
+
+ </Steps>
+
+Great work on getting your static web app working! Continue your journey to the next section to [make your Nuxt project dynamic with Prepr content](/connecting-a-front-end-framework/nuxtjs/nuxt-complete-guide/step-2-make-the-project-dynamic).

@@ -1,29 +1,45 @@
 {
-  "name": "nuxt-app",
-  "private": true,
+  "name": "nuxt-complete-starter",
   "type": "module",
+  "private": true,
+  "engines": {
+    "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
+  },
   "scripts": {
-    "build": "nuxt build",
     "dev": "nuxt dev",
-    "generate": "nuxt generate",
+    "build": "npm run codegen && nuxt build",
+    "start": "node --env-file-if-exists=.env .output/server/index.mjs",
     "preview": "nuxt preview",
+    "typecheck": "nuxt typecheck",
+    "codegen": "graphql-codegen --config codegen.ts",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.3.0",
-    "nuxt": "^3.21.10",
-    "tailwindcss": "^4.3.0",
-    "vue": "^3.5.34",
-    "vue-router": "^4.5.0"
+    "@graphql-typed-document-node/core": "^3.2.0",
+    "@nuxt/fonts": "^0.14.0",
+    "@preprio/toolkit": "^0.4.3",
+    "@tailwindcss/vite": "^4.3.3",
+    "graphql": "^17.0.2",
+    "nuxt": "^4.6.0",
+    "tailwindcss": "^4.3.3",
+    "vue": "^3.5.43",
+    "vue-router": "^5.3.1"
   },
   "devDependencies": {
-    "@nuxtjs/apollo": "^5.0.0-alpha.16",
-    "@types/node": "^22.19.17"
+    "@graphql-codegen/cli": "^7.4.4",
+    "@graphql-codegen/client-preset": "^6.2.1",
+    "@graphql-codegen/introspection": "^6.1.0",
+    "dotenv": "^18.0.5",
+    "typescript": "^6.0.3",
+    "vue-tsc": "^3.3.12"
   },
   "packageManager": "pnpm@10.5.2",
   "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ],
     "overrides": {
-      "devalue": "^5.9.3",
+      "devalue": ">=5.9.3",
       "ws": ">=8.20.1",
       "shell-quote": "^1.9.0",
       "esbuild": ">=0.28.1",
@@ -40,7 +56,7 @@
       "postcss": ">=8.5.23",
       "postcss@<8.5.10": ">=8.5.10",
       "svgo": "^4.1.0",
-      "brace-expansion": "^2.1.4",
+      "brace-expansion": ">=2.1.4",
       "nanoid": "^3.3.18"
     }
   }
