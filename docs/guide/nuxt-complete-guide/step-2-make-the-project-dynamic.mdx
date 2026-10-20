@@ -1,0 +1,428 @@
+---
+title: "Connect your Nuxt website to Prepr"
+description: "Guide to connect your Nuxt project with Prepr and retrieve dynamic content using a typed GraphQL composable."
+
+# openGraph:
+#   images:
+#     - url: TODO_REPLACE
+#       width: 1200
+#       height: 630
+#       alt: TODO_REPLACE
+# twitter:
+#   images:
+#     - TODO_REPLACE
+---
+
+import { Callout, Steps, Tabs } from 'nextra/components'
+import { GoGear } from "react-icons/go";
+import Caption from '@/components/caption'
+
+# Make your Nuxt project dynamic
+
+*This guide shows you how to connect an existing Nuxt project to Prepr to retrieve and show Acme Lease demo content.*
+
+## Connect your Nuxt website to Prepr
+
+The steps below continue from the previous section, [Set up a Nuxt project](/connecting-a-front-end-framework/nuxtjs/nuxt-complete-guide/step-1-set-up-a-nuxt-project).
+If you don't yet have a Nuxt website with static pages, follow the steps in this section first.
+Otherwise, let's get started.
+
+<Steps>
+
+### Add the Prepr API URL
+
+Your Nuxt website retrieves content from the Prepr GraphQL API.
+The API URL includes an access token, so you'll store it in an environment variable that is only available on the server.
+
+1. Create a `.env` file in the root directory of your project and add the API URL like this:
+
+        ```bash filename="./.env" copy
+        NUXT_PREPR_GRAPHQL_URL=<YOUR-PREPR-GRAPHQL-URL>
+        ```
+
+2. Replace the placeholder value `<YOUR-PREPR-GRAPHQL-URL>` with the *API URL* of an access token from Prepr. Get an access token by logging into your Prepr account:<br/>
+  a. Click the <GoGear className="inline-icons"/> icon and choose the **Access tokens** option to view all the access tokens.<br/>
+  b. Click to open the *GraphQL Production* access token, and copy the *API URL* to only retrieve published content items on your site for now.<br/>
+  c. Paste the copied *API URL* in your `.env` file.
+
+ <Callout type="info">
+  Use the *GraphQL Production* access token to request published content items for your live app and use the *GraphQL Preview* token to make a [preview of unpublished content items](/project-setup/setting-up-previews-and-visual-editing) for your content editors.
+</Callout>
+
+    ![GraphQL production access token example](https://assets-site.prepr.io/nl31q4rdm7c//graphql-api-token-example.png)
+
+3. Add the highlighted `runtimeConfig` to your `nuxt.config.ts`.
+
+        ```ts filename="./nuxt.config.ts" copy {16-19}
+        import tailwindcss from '@tailwindcss/vite'
+
+        // https://nuxt.com/docs/api/configuration/nuxt-config
+        export default defineNuxtConfig({
+          compatibilityDate: '2025-07-15',
+          devtools: { enabled: true },
+          modules: ['@nuxt/fonts'],
+          css: ['~/assets/css/main.css'],
+          // @nuxt/fonts finds the Ubuntu font in main.css and self-hosts it.
+          fonts: {
+            defaults: { weights: [400, 700] },
+          },
+          vite: {
+            plugins: [tailwindcss()],
+          },
+          runtimeConfig: {
+            // Server-only: set with NUXT_PREPR_GRAPHQL_URL in .env or on your host.
+            preprGraphqlUrl: '',
+          },
+        })
+        ```
+
+<Callout type="info">
+Nuxt fills [runtime config](https://nuxt.com/docs/guide/going-further/runtime-config) values from environment variables that start with `NUXT_`, so `NUXT_PREPR_GRAPHQL_URL` sets `preprGraphqlUrl`.
+Because the key isn't inside `public`, the value is only available on the server and never ends up in the browser.
+</Callout>
+
+### Install a code generator
+
+In this step, you'll install a GraphQL code generator to generate TypeScript types automatically for your queries and keep these up to date with any schema changes.
+Check out the [TypeScript best practices doc](/development/best-practices/typescript#install-a-graphql-code-generator) for more details.
+
+1. Stop the localhost website server (`CTRL-C`) if it's running and execute the following commands in your terminal:
+
+        ```bash copy
+        npm install graphql @graphql-typed-document-node/core
+        npm install -D @graphql-codegen/cli @graphql-codegen/client-preset @graphql-codegen/introspection dotenv
+        ```
+
+2. Once done, create a new file, `codegen.ts` in the root of your project. Update it with the code below.
+
+        ```ts filename="./codegen.ts" copy
+        import 'dotenv/config'
+        import type { CodegenConfig } from '@graphql-codegen/cli'
+
+        const config: CodegenConfig = {
+          overwrite: true,
+          schema: process.env.NUXT_PREPR_GRAPHQL_URL,
+          documents: ['app/queries/**/*.graphql'],
+          generates: {
+            'app/gql/': {
+              preset: 'client',
+              presetConfig: { fragmentMasking: false },
+              // Nuxt's tsconfig enables verbatimModuleSyntax.
+              config: { useTypeImports: true },
+            },
+            './graphql.schema.json': { plugins: ['introspection'] },
+          },
+        }
+
+        export default config
+        ```
+
+3. To complete the codegen installation, add the highlighted lines below to the `scripts` in your `package.json`.
+
+        ```json filename="./package.json" copy {5,10}
+        {
+          "name": "nuxt-complete-starter",
+          ...
+          "scripts": {
+            "build": "npm run codegen && nuxt build",
+            "dev": "nuxt dev",
+            "generate": "nuxt generate",
+            "preview": "nuxt preview",
+            "postinstall": "nuxt prepare",
+            "codegen": "graphql-codegen --config codegen.ts"
+          },
+          ...
+        }
+        ```
+
+### Add a GraphQL query
+
+Once the GraphQL code generator is installed, you can add a query to get the content for your home page from Prepr.
+
+If you're using preloaded demo data in your Prepr environment as mentioned in the [Prerequisites](/connecting-a-front-end-framework/nuxtjs/nuxt-complete-guide/introduction#prerequisites), you should have a *Homepage* content item.
+The *Homepage* has all the elements of the page in a [*Stack* field](/content-modeling/field-types#stack-field).
+The stack makes it easy for an editor to set up their page content in a flexible structure for the front end.
+
+![Home page content item - stack field](https://assets-site.prepr.io/6i5lo1ckx8vj//acme-lease-homepage-stack-field.png)
+
+<Callout type="info">
+You can see that the hero and feature sections are in adaptive content blocks. We'll explain that in more detail in the upcoming personalization chapter.
+</Callout>
+
+Follow the steps below to add a query to retrieve the id, title, slug, and a stack containing the hero and feature sections with their own fields:
+
+1. Create a `queries` folder in the `app` directory of your project and create a file named `get-page-by-slug.graphql`.
+
+2. Add the following queries in the `queries` folder to retrieve a page by its slug:
+
+<Callout type="info">
+You'll notice that we've created separate fragment queries for the button, hero and feature UI components in a `fragments` folder.
+Fragments in GraphQL are a way to define a set of fields that can be reused.
+</Callout>
+
+   <Tabs items={["Page query","Button fragment query", "Feature fragment query", "Hero fragment query"]}>
+        <Tabs.Tab>
+        ```graphql filename="./app/queries/get-page-by-slug.graphql" copy
+        query GetPageBySlug($slug: String) {
+            Page(slug: $slug) {
+                title
+                _id
+                content {
+                    __typename
+                    ... on Hero {
+                        ...Hero
+                    }
+                    ... on Feature {
+                        ...Feature
+                    }
+                }
+            }
+        }
+        ```
+        </Tabs.Tab>
+        <Tabs.Tab>
+        ```graphql filename="./app/queries/fragments/button.fragment.graphql" copy
+        fragment Button on Button {
+            button_type
+            text
+            external_url
+            link {
+                ... on Category {
+                    _slug
+                }
+                ... on Page {
+                    _slug
+                }
+                ... on Post {
+                    _slug
+                }
+            }
+        }
+        ```
+        </Tabs.Tab>
+        <Tabs.Tab>
+        ```graphql filename="./app/queries/fragments/feature.fragment.graphql" copy
+        fragment Feature on Feature {
+            _id
+            heading
+            sub_heading
+            button {
+                ...Button
+            }
+            _context {
+                variant_key
+            }
+            image_position
+            image {
+                url(width: 870, height: 570)
+            }
+        }
+        ```
+        </Tabs.Tab>
+        <Tabs.Tab>
+        ```graphql filename="./app/queries/fragments/hero.fragment.graphql" copy
+        fragment Hero on Hero {
+            _id
+            sub_heading
+            image {
+                url(preset: "Hero", width: 2000)
+                height
+                width
+            }
+            _context {
+                variant_key
+            }
+            heading
+            buttons {
+                ...Button
+            }
+        }
+        ```
+        </Tabs.Tab>
+        </Tabs>
+
+<Callout type="info">
+You can create and [test GraphQL queries](/graphql-api/test-queries) using the [Apollo explorer](https://studio.apollographql.com/sandbox/explorer) from Prepr.
+Open the **API Explorer** from the *Homepage* content item or from your access token page.
+</Callout>
+
+### Generate TypeScript types
+
+1. Now that the query is created, generate the TypeScript types by running the following command in the terminal:
+
+        ```bash copy
+        npm run codegen
+        ```
+
+2. If the command is successful you'll see a new file called `graphql.ts` in the `app/gql` folder.
+Check out the [TypeScript doc](/development/best-practices/typescript#generate-typescript-types) for more details.
+
+### Fetch page content
+
+To view the Prepr content in your website, you need to fetch the page and show its elements.
+As mentioned previously, the page has elements in a *Stack* field.
+You'll show two components, a *Hero* section and *Feature* sections in the stack.
+
+1. Create a `composables` folder in the `app` directory and add a file called `usePrepr.ts` with the code below.
+This composable sends a query to the Prepr GraphQL API and returns the typed result.
+
+        ```ts filename="./app/composables/usePrepr.ts" copy
+        import { print } from 'graphql'
+        import type { TypedDocumentNode } from '@graphql-typed-document-node/core'
+
+        // Runs a Prepr GraphQL query during server-side rendering. The result reaches
+        // the browser in the Nuxt payload, so the GraphQL URL stays on the server.
+        export function usePrepr<TResult, TVariables>(
+          key: string,
+          document: TypedDocumentNode<TResult, TVariables>,
+          variables: TVariables,
+        ) {
+          return useAsyncData(key, async (nuxtApp) => {
+            const { data, errors } = await $fetch<{ data: TResult, errors?: { message: string }[] }>(nuxtApp.$config.preprGraphqlUrl, {
+              method: 'POST',
+              body: { query: print(document), variables },
+            })
+            if (errors?.length) throw createError(errors[0]!.message)
+            return data
+          })
+        }
+        ```
+
+<Callout type="info">
+`usePrepr` wraps Nuxt's [`useAsyncData`](https://nuxt.com/docs/api/composables/use-async-data).
+The query runs on the server when the page is rendered, and Nuxt sends the result to the browser along with the page, so the browser never calls the Prepr API itself.
+Like components, Nuxt auto-imports everything in the `composables` folder.
+</Callout>
+
+2. Replace the code in `app/pages/[...slug].vue` with the code below.
+The page gets the slug from the URL, queries the matching page from Prepr and shows a *Hero* or *Feature* section for each element in the stack.
+
+        ```vue filename="./app/pages/[...slug].vue" copy
+        <script setup lang="ts">
+        import { GetPageBySlugDocument } from '~/gql/graphql'
+
+        const route = useRoute()
+        // The home page has no slug in the URL; in Prepr its slug is '/'.
+        const slug = (route.params.slug as string[] | undefined)?.join('/') || '/'
+
+        const { data } = await usePrepr(`page-${slug}`, GetPageBySlugDocument, { slug })
+
+        if (!data.value?.Page) {
+          throw createError({ statusCode: 404, statusMessage: 'Page not found' })
+        }
+        const page = data.value.Page
+        </script>
+
+        <template>
+          <template v-for="(element, index) in page.content" :key="index">
+            <HeroSection v-if="element.__typename === 'Hero'" :item="element" />
+            <FeatureSection v-else-if="element.__typename === 'Feature'" :item="element" />
+          </template>
+        </template>
+        ```
+
+3. Update your components to display the data from Prepr.
+
+        <Tabs items={["Hero section","Feature section"]}>
+        <Tabs.Tab>
+        ```vue filename="./app/components/HeroSection.vue" copy {1-6, 12, 15, 19, 25}
+        <script setup lang="ts">
+        import type { HeroFragment } from '~/gql/graphql'
+
+        defineProps<{ item: HeroFragment }>()
+        </script>
+
+        <template>
+          <section class="bg-primary-50">
+            <div class="mx-auto max-w-8xl p-spacing flex flex-col items-center md:flex-row gap-8 py-10 lg:py-20">
+              <div class="basis-6/12">
+                <h1 class="text-mb-5xl lg:text-7xl text-secondary-700 font-medium break-words text-balance">
+                  {{ item.heading }}
+                </h1>
+                <p class="text-secondary-500 lg:text-lg mt-4 lg:mt-6 text-balance">
+                  {{ item.sub_heading }}
+                </p>
+                <div class="flex gap-4 mt-8 xl:mt-10">
+                  <div>
+                    <a href="#"><Button>{{ item.buttons[0]?.text }}</Button></a>
+                  </div>
+                </div>
+              </div>
+              <div class="basis-6/12 relative flex justify-end items-center">
+                <div class="z-10 flex items-center aspect-[20/17] w-9/12 overflow-hidden justify-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                  <img v-if="item.image?.url" :src="item.image.url" alt="Hero image" width="720" height="360" class="object-cover rounded-2xl">
+                </div>
+                <div class="w-9/12 aspect-[20/17] bg-primary-100 rounded-3xl right-0 top-0 z-0"></div>
+              </div>
+            </div>
+          </section>
+        </template>
+        ```
+        </Tabs.Tab>
+        <Tabs.Tab>
+        ```vue filename="./app/components/FeatureSection.vue" copy {2-4, 11-12, 16, 19, 21}
+        <script setup lang="ts">
+        import type { FeatureFragment } from '~/gql/graphql'
+
+        defineProps<{ item: FeatureFragment }>()
+        </script>
+
+        <template>
+          <section class="bg-primary-50">
+            <div class="mx-auto max-w-8xl p-spacing py-10 lg:py-10 xl:py-20">
+              <div class="flex flex-col items-start md:items-center md:flex-row gap-8 xl:gap-28 text-secondary-700">
+                <div v-if="item.image?.url" class="order-first basis-1/2" :class="item.image_position === 'RIGHT' ? 'md:order-last' : 'md:order-none'">
+                  <img :src="item.image.url" alt="Feature image" width="800" height="300" loading="lazy" class="rounded-2xl w-full aspect-[29/19] object-cover">
+                </div>
+                <div class="basis-1/2">
+                  <h2 class="text-mb-4xl lg:text-5xl font-medium text-secondary-700 text-balance">
+                    {{ item.heading }}
+                  </h2>
+                  <p class="text-lg mt-4 xl:mt-6 font-medium text-balance">
+                    {{ item.sub_heading }}
+                  </p>
+                  <a href="#"><Button>{{ item.button?.text }}</Button></a>
+                </div>
+              </div>
+            </div>
+          </section>
+        </template>
+        ```
+        </Tabs.Tab>
+        </Tabs>
+
+4. When the page doesn't exist in Prepr, the page code throws a *404* error. Create an `app/error.vue` file to show the error with the navigation bar.
+
+        ```vue filename="./app/error.vue" copy
+        <script setup lang="ts">
+        import type { NuxtError } from '#app'
+
+        defineProps<{ error: NuxtError }>()
+        </script>
+
+        <template>
+          <NavBar />
+          <div class="mx-auto max-w-8xl p-spacing py-20 text-center text-secondary-700">
+            <h1 class="text-5xl font-medium">{{ error.statusCode }}</h1>
+            <p class="mt-4">{{ error.statusCode === 404 ? 'This page could not be found.' : 'Something went wrong.' }}</p>
+          </div>
+        </template>
+        ```
+
+5. Restart the server with `npm run dev` and refresh your page in the browser.
+
+<Callout type="info">
+**Troubleshooting** <br/>
+**Compilation error**: `'"~/gql/graphql"' has no exported member named 'GetPageBySlugDocument'`.<br/>
+**Cause**: The query name was not defined or is different than expected in the `[...slug].vue` page.<br/>
+**Solution**: Check that the [query you created](#add-a-graphql-query) has a query name. In our example the query name is defined as `query GetPageBySlug(...){...}`. After updating the query, [regenerate the TypeScript types](#generate-typescript-types) and restart the server.
+</Callout>
+
+ </Steps>
+
+Now when you view the website, you should see the dynamic content from Prepr like in the image below.
+
+![TODO-SCREENSHOT: Dynamic home page](https://assets-site.prepr.io/p6rja5r1cj8//dynamic-website-with-prepr-content.png)
+
+All done! You've connected your Nuxt website to Prepr and you're showing Prepr content.
+Continue your journey to the next section to [set up data collection](/connecting-a-front-end-framework/nuxtjs/nuxt-complete-guide/step-3-set-up-data-collection).
