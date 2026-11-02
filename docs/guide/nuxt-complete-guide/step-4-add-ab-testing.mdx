@@ -1,0 +1,174 @@
+---
+title: "How to add A/B testing to your Nuxt website"
+description: "Learn to implement A/B testing in Nuxt with Prepr, including setup, tracking, and measuring results for better engagement."
+
+# openGraph:
+#   images:
+#     - url: TODO_REPLACE
+#       width: 1200
+#       height: 630
+#       alt: TODO_REPLACE
+# twitter:
+#   images:
+#     - TODO_REPLACE
+---
+
+import { Callout, Steps } from 'nextra/components'
+import { FaEllipsisVertical, FaCircleInfo} from "react-icons/fa6";
+
+# Add A/B testing to your Nuxt website
+
+*Prepr CMS enables editors to create A/B tests directly within their content.
+This means testing different content versions is simple and effective.
+This chapter of the Nuxt complete guide demonstrates how to set up A/B testing in Prepr, including testing the A and B variants and tracking metrics.*
+
+At the end of this section, you'll see the A and B versions on the *Electric Lease Landing Page*.
+
+![Electric landing page with A/B test](https://assets-site.prepr.io/2u8iwxsr0nls//a-b-test-on-home-page.png)
+
+The steps below make use of the A/B test in the *Electric Lease Landing Page* content item from the Acme Lease demo data.
+
+![A/B test in Electric lease content item](https://assets-site.prepr.io/6l4bf1thuzjc//ab-test-example-electric-landing-page.png)
+
+This chapter continues from the previous section, [Set up data collection](/connecting-a-front-end-framework/nuxtjs/nuxt-complete-guide/step-3-set-up-data-collection).
+If you haven't yet enabled Prepr tracking in your Nuxt project, follow the steps in that section first.
+Otherwise, let's get started.
+
+## Set up A/B testing for the *Electric Lease Landing Page*
+
+You can run an A/B test on parts of a web page to show two different versions of the content to different visitors and compare which variant is more engaging.
+To show the right variant to the right visitor:
+
+- Every visitor gets an ID that resolves to an A or a B variant.
+- In your front end, you need to send this ID along with the query to retrieve the right variant.
+- This is done by setting the value for the API request header, `Prepr-Customer-Id`, when you make the API request to retrieve the content.
+
+By [installing the Prepr Toolkit](/connecting-a-front-end-framework/nuxtjs/nuxt-complete-guide/step-3-set-up-data-collection#install-the-prepr-toolkit) in the previous section, you've already prepared your API request headers.
+
+<Steps>
+
+### Set the API request headers
+
+Since the API request headers are already prepared, you can simply send them with your query.
+To set the API request headers, update your `app/composables/usePrepr.ts` with the highlighted code below:
+
+```ts filename="./app/composables/usePrepr.ts" copy {2, 12-13, 18}
+import { print } from 'graphql'
+import { getPreprHeaders } from '@preprio/toolkit/nuxt'
+import type { TypedDocumentNode } from '@graphql-typed-document-node/core'
+
+// Runs a Prepr GraphQL query during server-side rendering. The result reaches
+// the browser in the Nuxt payload, so the GraphQL URL stays on the server.
+export function usePrepr<TResult, TVariables>(
+  key: string,
+  document: TypedDocumentNode<TResult, TVariables>,
+  variables: TVariables,
+) {
+  // Prepr uses these headers (visitor ID, segments, A/B variant) to pick the right variant.
+  const preprHeaders = getPreprHeaders(new Headers(useRequestHeaders())) as Record<string, string>
+
+  return useAsyncData(key, async (nuxtApp) => {
+    const { data, errors } = await $fetch<{ data: TResult, errors?: { message: string }[] }>(nuxtApp.$config.preprGraphqlUrl, {
+      method: 'POST',
+      headers: preprHeaders,
+      body: { query: print(document), variables },
+    })
+    if (errors?.length) throw createError(errors[0]!.message)
+    return data
+  })
+}
+```
+
+`useRequestHeaders` reads the headers of the visitor's request, which the toolkit's server middleware prepared, and `getPreprHeaders` picks out the Prepr headers.
+
+### Test your A/B test
+
+The A/B test is now running in your website. Let's check the traffic distribution for the A/B test.
+
+In your Prepr environment, go to the *Electric Lease Landing Page* content item and click the <FaEllipsisVertical className="inline-icons" /> icon in your A/B test group and choose the **Manage settings** option.
+You'll notice the traffic distribution is set to 50%.
+This means that about 50% of visitors will see variant A and the other 50% will see variant B.
+
+![change traffic distribution](https://assets-site.prepr.io/1v4ttscb8r8l//ab-test-example-settings-modal.png)
+
+To test that the A/B test in the electric lease landing page is showing variant A and variant B to different visitors, you can simulate this in your browser.
+Follow the steps below to do this simple test.
+
+1. Go to `http://localhost:3000/electric-lease` to open the *Electric Lease Landing Page* in the browser.
+Take note of the heading in the top section.
+The text should read either *Drive electric ⚡ Save more. Lease smarter.* (Variant A) or *Lease electric ⚡ Save bigger. Lease smarter.* (Variant B).
+
+2. Right click the page to **Inspect the page**, click the **Application** tab. Under the cookies, click your localhost. You'll notice the `__prepr_uid` cookie in the list.
+
+3. Right-click the localhost entry to clear the cookies and refresh the page again. If you still see the same variant, repeat the process. You might see the same variant a couple of times in a row.
+
+        ![clear cookies](https://assets-site.prepr.io/3f26vhcduiy3//clear-cookies.png)
+
+When you see the other variant, you know that the A/B test is running successfully.
+
+### Add HTML attributes to track impressions and conversion events
+
+Your A/B test is running successfully, however there are no metrics being recorded yet.
+You can see this with the <FaCircleInfo className="inline-icons" /> **Awaiting data** message at the top of the A/B test in the *Electric Lease Landing Page* content item.
+
+![A/B test without metrics](https://assets-site.prepr.io/1x2ugsn6nzbv//ab-test-example-awaiting-data.png)
+
+To get Prepr to start showing some metrics data, you need to add HTML attributes to elements in your A/B test.
+When you add these attributes, the tracking pixel you added in the previous section automatically tracks impressions and your chosen conversion events.
+
+1. To start collecting impressions and clicks, add the HTML attributes `data-prepr-variant-key` and `data-prepr-variant-event` to the *Hero* section as shown in the highlighted code below.
+The impression is recorded when the *Hero* element scrolls into view.
+The click event is recorded when the visitor clicks the link.
+
+        ```vue filename="./app/components/HeroSection.vue" copy {8-9, 20-21}
+        <script setup lang="ts">
+        import type { HeroFragment } from '~/gql/graphql'
+
+        defineProps<{ item: HeroFragment }>()
+        </script>
+
+        <template>
+          <!-- data-prepr-variant-key on the section records an impression for the variant -->
+          <section class="bg-primary-50" :data-prepr-variant-key="item._context?.variant_key">
+            <div class="mx-auto max-w-8xl p-spacing flex flex-col items-center md:flex-row gap-8 py-10 lg:py-20">
+              <div class="basis-6/12">
+                <h1 class="text-mb-5xl lg:text-7xl text-secondary-700 font-medium break-words text-balance">
+                  {{ item.heading }}
+                </h1>
+                <p class="text-secondary-500 lg:text-lg mt-4 lg:mt-6 text-balance">
+                  {{ item.sub_heading }}
+                </p>
+                <div class="flex gap-4 mt-8 xl:mt-10">
+                  <div>
+                    <!-- data-prepr-variant-event on the link records a click (conversion) -->
+                    <a href="#" data-prepr-variant-event><Button>{{ item.buttons[0]?.text }}</Button></a>
+                  </div>
+                </div>
+              </div>
+              <div class="basis-6/12 relative flex justify-end items-center">
+                <div class="z-10 flex items-center aspect-[20/17] w-9/12 overflow-hidden justify-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                  <img v-if="item.image?.url" :src="item.image.url" alt="Hero image" width="720" height="360" class="object-cover rounded-2xl">
+                </div>
+                <div class="w-9/12 aspect-[20/17] bg-primary-100 rounded-3xl right-0 top-0 z-0"></div>
+              </div>
+            </div>
+          </section>
+        </template>
+        ```
+
+<Callout type="info">
+If you want to track a conversion other than a click event, e.g. a quote request, then set your `data-prepr-variant-event` to the custom event.
+For example: `data-prepr-variant-event="QuoteRequest"`.
+Check out the [A/B testing doc for more details](/ab-testing/setting-up-ab-testing).
+</Callout>
+
+2. To start recording metrics, go to the electric lease landing page in your website, in the top section click the **Find your car** button.
+
+3. Now when you view the A/B test in your *Electric Lease Landing Page* content item, you can click the **Metrics** link and see the number of impressions and clicks like in the image below.
+
+        ![A/B test metrics](https://assets-site.prepr.io/18ff40fgug2w//ab-test-example-metrics.png)
+
+</Steps>
+
+Congratulations! You have a running A/B test with metrics in your Nuxt website.
+Now, you can [add personalization](/connecting-a-front-end-framework/nuxtjs/nuxt-complete-guide/step-5-add-personalization) to your website.

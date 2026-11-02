@@ -1,0 +1,125 @@
+---
+title: "Nuxt guide to install the Prepr preview toolbar"
+description: "Learn how to add the Prepr preview toolbar to your Nuxt website for easy A/B testing and content preview."
+
+# openGraph:
+#   images:
+#     - url: TODO_REPLACE
+#       width: 1200
+#       height: 630
+#       alt: TODO_REPLACE
+# twitter:
+#   images:
+#     - TODO_REPLACE
+---
+
+import { Callout, Steps } from 'nextra/components'
+
+# Install the *Prepr preview toolbar*
+
+*This guide shows you how to install the Prepr preview toolbar to easily review A/B testing and Adaptive content directly in your Nuxt website.*
+
+At the end of this section, you can use the Prepr preview toolbar in your website.
+
+![Prepr preview toolbar](https://assets-site.prepr.io/545864k940pz//prepr-preview-toolbar.png)
+
+## Add the *Prepr preview toolbar* to your website
+
+The steps below assume that you already have [A/B testing](/connecting-a-front-end-framework/nuxtjs/nuxt-complete-guide/step-4-add-ab-testing) or [personalization](/connecting-a-front-end-framework/nuxtjs/nuxt-complete-guide/step-5-add-personalization) set up in your Nuxt website.
+If you haven't yet added A/B testing or personalization, follow the steps in these sections first.
+Otherwise, let's get started.
+
+<Callout type="info">
+When you installed the [Prepr Toolkit](/connecting-a-front-end-framework/nuxtjs/nuxt-complete-guide/step-3-set-up-data-collection#install-the-prepr-toolkit) previously, it included the *Prepr preview toolbar* which is pre-configured for adaptive content and A/B testing.
+</Callout>
+
+<Steps>
+
+### Enable the *Prepr preview toolbar*
+
+The *Prepr preview toolbar* is already installed, so the next step is to enable it.
+To enable the preview toolbar in your Nuxt front end, follow the steps below.
+
+1. Add the `NUXT_PREPR_ENV` variable to the `.env` file. You can enable the preview toolbar for a staging environment by setting the value to `preview`.
+
+        <Callout type="info">
+        Set this variable to `production` when you deploy your website to production so that the preview toolbar doesn't get displayed in your live website and visitors can't switch segments or A/B variants.
+        </Callout>
+
+        ```bash copy filename="./.env" {2}
+        NUXT_PREPR_GRAPHQL_URL=<YOUR-PREPR-GRAPHQL-URL>
+        NUXT_PREPR_ENV=preview
+        ```
+
+2. Since we are setting up the configuration for the staging environment, update the value of the `NUXT_PREPR_GRAPHQL_URL` variable to the *API URL* of the *GraphQL Preview* access token.
+This access token allows content editors to preview unpublished content items.
+
+        ![preview access token](https://assets-site.prepr.io/56ce41l9ppm7//graphql-preview-access-token.png)
+
+3. The preview toolbar fetches all segments from the Prepr API. So, you need to give it access to do this by ticking the **Enable edit mode** checkbox in the access token.
+Click the **Save** button.
+
+        <Callout type="info">
+
+        **Invisible unicode characters**
+
+        When using the preview access token, you'll notice your query responses include additional unicode characters for the whitespace in the text fields.
+        When you turn on edit mode in an access token, Stega-encoding serializes metadata into invisible UTF-8 encoded characters and appends them to string values.
+
+        </Callout>
+
+        ![example query response with unicode characters](https://assets-site.prepr.io/23a2ny9qei6r//stega-encoding-example.png)
+
+4. Add the highlighted `preprEnv` value to the `runtimeConfig` in your `nuxt.config.ts`. It defaults to `production`, so the toolbar stays off unless you set `NUXT_PREPR_ENV`.
+
+        @@code guide-step-6 nuxt.config.ts diff=guide-step-5@@
+
+5. So far, your web app is setting the headers based on the visitor cookies to determine how to render the A/B testing and adaptive content.
+To make sure the Prepr preview toolbar overrides the headers to switch between the A/B testing and adaptive content variants, update `server/middleware/prepr.ts` to enable the preview option in preview mode only.
+
+        @@code guide-step-6 server/middleware/prepr.ts diff=guide-step-5@@
+
+### Add the preview toolbar component
+
+Now that the preview access token is updated, you can render the preview toolbar in your website by adding the highlighted code to `app/app.vue`.
+
+@@code guide-step-6 app/app.vue diff=guide-step-5@@
+
+The toolbar props are resolved on the server, like the access token, and only when `NUXT_PREPR_ENV` is set to `preview`.
+`getToolbarProps` never throws an error. If it can't fetch the segments, the toolbar shows an empty segment list.
+
+### Test the preview toolbar
+
+Now that the preview toolbar is being rendered, you can test it with the following steps:
+
+1. Stop the localhost website server (`CTRL-C`) if it's running and restart it with the `npm run dev` terminal command.
+
+2. Go to the home page of your website, open the Prepr preview toolbar and click the **Reset** button.
+
+3. Choose the **Electric Car Lovers** segment. You'll see the personalized header for this segment.
+
+![TODO-SCREENSHOT: preview toolbar - electric car segment](https://assets-site.prepr.io/po31rlv9lap//toolbar-electric-car-segment.png)
+
+4. Go to `http://localhost:3000/electric-lease` to open the *Electric Lease Landing Page* in the browser and choose the B variant. You'll see that the text changes to the B variant content.
+
+![TODO-SCREENSHOT: preview toolbar - variant b](https://assets-site.prepr.io/3sqcdajzao8d//toolbar-b-variant-example.png)
+
+ </Steps>
+
+ ## All done
+
+Congratulations!
+You have successfully installed the Prepr preview toolbar in your Nuxt website.
+This brings you to the end of the Nuxt complete guide which has given you all the tools and tips you need to create your own web app
+connected to Prepr CMS complete with personalization, A/B testing and a preview toolbar.
+Don't hesitate to [give us feedback](mailto:feedback@prepr.io) on your experience using this guide.
+
+ ## Next steps
+
+To learn more on how to expand your project, check out the following resources:
+
+- [Content modeling examples](/content-modeling/examples)
+- [More data collection details](/data-collection)
+- [More about A/B testing](/ab-testing)
+- [More about personalization](/personalization)
+- [Deploy your Nuxt app](https://nuxt.com/docs/getting-started/deployment)
